@@ -13,6 +13,6 @@ class Modely extends Facade
      */
     protected static function getFacadeAccessor(): string
     {
-        return 'modely';
+        return \Lorinczdev\Modely\Modely::class;
     }
 }

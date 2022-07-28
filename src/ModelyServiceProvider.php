@@ -3,6 +3,8 @@
 namespace Lorinczdev\Modely;
 
 use Illuminate\Support\ServiceProvider;
+use Lorinczdev\Modely\Routing\Route;
+use Lorinczdev\Modely\Routing\RouteResourceOptions;
 
 class ModelyServiceProvider extends ServiceProvider
 {
@@ -31,12 +33,12 @@ class ModelyServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $this->mergeConfigFrom(__DIR__.'/../config/modely.php', 'modely');
+        $this->mergeConfigFrom(__DIR__ . '/../config/modely.php', 'modely');
 
         // Register the service the package provides.
-        $this->app->singleton('modely', function ($app) {
-            return new Modely;
-        });
+        $this->app->singleton(Modely::class, fn($app) => new Modely());
+        $this->app->singleton(Route::class, fn() => new Route());
+        $this->app->singleton(RouteResourceOptions::class, fn() => new RouteResourceOptions());
     }
 
     /**
@@ -44,7 +46,7 @@ class ModelyServiceProvider extends ServiceProvider
      *
      * @return array
      */
-    public function provides()
+    public function provides(): array
     {
         return ['modely'];
     }
@@ -58,7 +60,7 @@ class ModelyServiceProvider extends ServiceProvider
     {
         // Publishing the configuration file.
         $this->publishes([
-            __DIR__.'/../config/modely.php' => config_path('modely.php'),
+            __DIR__ . '/../config/modely.php' => config_path('modely.php'),
         ], 'modely.config');
 
         // Publishing the views.
