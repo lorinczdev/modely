@@ -12,14 +12,14 @@ abstract class HasOneOrMany
     /**
      * @param class-string<Model> $relationModelClass
      * @param Model               $parent
-     * @param string              $foreignKeyName
-     * @param int                 $foreignKey
+     * @param string              $foreignKey
+     * @param string              $localKey
      */
     public function __construct(
         public string $relationModelClass,
         public Model  $parent,
-        public string $foreignKeyName,
-        public int    $foreignKey
+        public string $foreignKey,
+        public string $localKey
     )
     {
     }
@@ -52,8 +52,8 @@ abstract class HasOneOrMany
      */
     protected function setForeignKey(Model $model): Model
     {
-        $model->setAttribute('foreign_key', $this->foreignKey);
-        $model->setAttribute('foreign_key_name', $this->foreignKeyName);
+        $model->foreignKey = $this->parent->getAttribute($this->localKey);
+        $model->foreignKeyName = $this->foreignKey;
 
         return $model;
     }

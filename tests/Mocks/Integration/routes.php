@@ -8,5 +8,5 @@ Route::resource('users', User::class);
 
 Route::put('users/{id}/promote', [User::class, 'promote']);
 
-Route::resource('users/{foreign_key}/posts', Post::class)
+Route::resource('users/{user_id}/posts', Post::class)
     ->only('index', 'store', 'destroy');

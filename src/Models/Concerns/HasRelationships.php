@@ -2,7 +2,6 @@
 
 namespace Lorinczdev\Modely\Models\Concerns;
 
-use Lorinczdev\Modely\Models\Model;
 use Lorinczdev\Modely\Models\Relations\HasMany;
 use Lorinczdev\Modely\Models\Relations\HasOne;
 use Str;
@@ -18,9 +17,9 @@ trait HasRelationships
      */
     protected array $relations = [];
 
-    public function getForeignKeyName(): string
+    public function getForeignKey(): string
     {
-        return Str::of(class_basename($this::class))->lcfirst();
+        return Str::snake(class_basename($this)) . '_' . $this->getKeyName();
     }
 
     /**
@@ -45,28 +44,34 @@ trait HasRelationships
     /**
      * Create has many relationship.
      *
-     * @param class-string<Model> $className
+     * @param class-string<static> $className
+     * @param string|null          $foreignKey
+     * @param string|null          $localKey
      * @return HasMany
      */
-    protected function hasMany(string $className): HasMany
+    protected function hasMany(string $className, ?string $foreignKey = null, ?string $localKey = null): HasMany
     {
-        $foreignKeyName = $this->getForeignKeyName();
-        $foreignKey = $this->getKey();
+        $foreignKey = $foreignKey ?: $this->getForeignKey();
 
-        return new HasMany($className, $this, $foreignKeyName, $foreignKey);
+        $localKey = $localKey ?: $this->getKeyName();
+
+        return new HasMany($className, $this, $foreignKey, $localKey);
     }
 
     /**
      * Create has one relationship.
      *
-     * @param class-string $className
+     * @param class-string<static> $className
+     * @param string|null          $foreignKey
+     * @param string|null          $localKey
      * @return HasOne
      */
-    protected function hasOne(string $className): HasOne
+    protected function hasOne(string $className, ?string $foreignKey = null, ?string $localKey = null): HasOne
     {
-        $foreignKeyName = $this->getForeignKeyName();
-        $foreignKey = $this->getKey();
+        $foreignKey = $foreignKey ?: $this->getForeignKey();
 
-        return new HasOne($className, $this, $foreignKeyName, $foreignKey);
+        $localKey = $localKey ?: $this->getKeyName();
+
+        return new HasOne($className, $this, $foreignKey, $localKey);
     }
 }

@@ -8,7 +8,7 @@ use Lorinczdev\Modely\Tests\Mocks\Integration\Models\User;
 it('can get foreign key name', function () {
     $user = new DummyUser();
 
-    expect($user->getForeignKeyName())->toBe('dummyUser');
+    expect($user->getForeignKey())->toBe('dummy_user_id');
 });
 
 it('has hasOne relation', function () {
@@ -26,12 +26,12 @@ it('has hasMany relation', function () {
 
 class DummyUser extends User
 {
-    public function hasMany(string $className): HasMany
+    public function hasMany(string $className, ?string $foreignKey = null, ?string $localKey = null): HasMany
     {
         return parent::hasMany($className);
     }
 
-    public function hasOne(string $className): HasOne
+    public function hasOne(string $className, ?string $foreignKey = null, ?string $localKey = null): HasOne
     {
         return parent::hasOne($className);
     }
