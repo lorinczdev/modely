@@ -23,7 +23,7 @@ trait HasQuery
         'get',
         'create',
         'find',
-        // 'first',
+        'first',
         // 'where',
         // 'skip',
         // 'limit',
