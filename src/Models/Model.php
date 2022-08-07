@@ -101,7 +101,7 @@ abstract class Model implements Arrayable, ArrayAccess
     public function save(): bool
     {
         if ($this->exists) {
-            Request::for($this)->send('update', $this->getAttributes());
+            Request::for($this)->send('update', $this->getDirty());
         } else {
             $response = Request::for($this)->send('store', $this->getAttributes());
 
