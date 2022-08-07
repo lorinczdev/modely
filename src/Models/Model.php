@@ -130,6 +130,11 @@ abstract class Model implements Arrayable, ArrayAccess
         $this->exists = false;
     }
 
+    public function isDeleted(): bool
+    {
+        return !!$this->deletedAt;
+    }
+
     /**
      * @param array $items
      * @return Collection<int, static>
