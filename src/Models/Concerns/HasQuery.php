@@ -24,14 +24,14 @@ trait HasQuery
         'create',
         'find',
         'first',
-        // 'where',
-        // 'skip',
-        // 'limit',
-        // 'page',
-        // 'createOrUpdate',
-        // 'whereFirst',
-        // 'firstOrCreate',
-        // 'paginate'
+        'where',
+        'skip',
+        'limit',
+        'page',
+        'createOrUpdate',
+        'whereFirst',
+        'firstOrCreate',
+        'paginate'
     ];
 
     /**
