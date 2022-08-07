@@ -13,6 +13,7 @@ use Lorinczdev\Modely\Http\Request;
 use Lorinczdev\Modely\Models\Concerns\HasQuery;
 use Lorinczdev\Modely\Models\Concerns\HasRelationships;
 use Lorinczdev\Modely\Modely;
+use Lorinczdev\Modely\Routing\Route;
 
 abstract class Model implements Arrayable, ArrayAccess
 {
@@ -132,7 +133,7 @@ abstract class Model implements Arrayable, ArrayAccess
 
     public function isDeleted(): bool
     {
-        return !!$this->deletedAt;
+        return !! $this->deletedAt;
     }
 
     /**
