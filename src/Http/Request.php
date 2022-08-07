@@ -52,7 +52,11 @@ class Request
     {
         $url = $route['url'];
 
-        foreach ([...$this->getModel()->getAttributes(), ...$this->parameters] as $key => $value) {
+        foreach ([
+            $this->getModel()->getKeyName() => $this->getModel()->getKey(),
+            $this->getModel()->foreignKeyName => $this->getModel()->foreignKey,
+            ...$this->parameters
+         ] as $key => $value) {
             $url = Str::replace('{' . $key . '}', $value, $url);
         }
 
