@@ -192,6 +192,10 @@ abstract class Model implements Arrayable, ArrayAccess
             return $this->forwardCallTo($this->newQuery(), $method, $arguments);
         }
 
+        if ($route = app(Route::class)->find(static::class, $method)) {
+            return Request::for($this)->send($method);
+        }
+
         // exception
         throw new BadMethodCallException(sprintf('Call to undefined method %s::%s()', $this::class, $method));
     }

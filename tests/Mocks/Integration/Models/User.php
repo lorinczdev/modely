@@ -8,6 +8,7 @@ use Lorinczdev\Modely\Models\Relations\HasMany;
 
 /**
  * @property Collection<int, Post> $posts // TODO how to make this work?
+ * @method promote()
  */
 class User extends Model
 {

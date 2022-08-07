@@ -103,7 +103,6 @@ test('user can delete all related posts', function () {
     expect($user->posts()->get())->toHaveCount(0);
 });
 
-
 it('has custom query builder', function () {
     $user = new User();
 
@@ -111,4 +110,17 @@ it('has custom query builder', function () {
         ->toEqual(IntegrationQueryBuilder::class)
         ->and($user->newQuery()->builder())
         ->toBeInstanceOf(IntegrationQueryBuilder::class);
+});
+
+it('user can be promoted', function () {
+    Http::fake([
+        '*/users/1' => Http::response(body: fixture('Users/show')),
+        '*/users/1/promote' => Http::response(body: fixture('Users/show')),
+    ]);
+
+    $user = User::find(1);
+
+    $user->promote();
+
+    expect($user)->toBeInstanceOf(User::class)->id->toEqual(1);
 });
