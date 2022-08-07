@@ -110,6 +110,8 @@ abstract class Model implements Arrayable, ArrayAccess
 
         $this->exists = true;
 
+        $this->syncOriginal();
+
         return true;
     }
 
