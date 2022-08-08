@@ -182,6 +182,16 @@ abstract class Model implements Arrayable, ArrayAccess
     }
 
     /**
+     * Get all the models from the API.
+     *
+     * @return Collection<int, static>
+     */
+    public static function all(): Collection
+    {
+        return static::query()->get();
+    }
+
+    /**
      * Convert the model instance to an array.
      */
     public function toArray(): array

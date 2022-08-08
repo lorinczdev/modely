@@ -13,6 +13,10 @@ it('can read users', function () {
     $users = User::get();
 
     expect($users)->toBeCollection();
+
+    $users = User::all();
+
+    expect($users)->toBeCollection();
 });
 
 it('can read user detail', function () {
