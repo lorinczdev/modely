@@ -205,7 +205,7 @@ abstract class Model implements Arrayable, ArrayAccess
 
     public function __call(string $method, array $arguments): mixed
     {
-        if (in_array($method, $this->queryMethods, true)) {
+        if (in_array($method, $this->passthru, true)) {
             return $this->forwardCallTo($this->newQuery(), $method, $arguments);
         }
 

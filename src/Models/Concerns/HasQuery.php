@@ -19,7 +19,7 @@ use Lorinczdev\Modely\Models\Query;
  */
 trait HasQuery
 {
-    protected array $queryMethods = [
+    protected array $passthru = [
         'get',
         'create',
         'find',
