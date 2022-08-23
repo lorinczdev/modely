@@ -39,6 +39,7 @@ class Modely
              */
             $modelClass = Str::of($nsLine)
                 ->after('namespace ')
+                ->trim()
                 ->substr(0, -1)
                 ->append('\\')
                 ->append($modelFile->getBasename('.php'))
