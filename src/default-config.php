@@ -11,21 +11,21 @@ return [
     'client' => ApiClient::class,
 
     'query' => [
-        // Compiler used to compile query
+        // Compiler used to compile query.
         'compiler' => CompileAsArrayQuery::class,
     ],
 
-    // Request used by integration to prepare HTTP request
+    // Request used by integration to prepare HTTP request.
     'request' => \Lorinczdev\Modely\Http\ApiRequest::class,
 
-    // Response used by integration to parse HTTP response
+    // Response used by integration to parse HTTP response.
     'response' => \Lorinczdev\Modely\Http\ApiResponse::class,
 
     // Path to routes file where API endpoints are registered.
     'routes' => __DIR__ . '/routes.php',
 
     'dir' => [
-        // Directory where models are stored
+        // Directory where models are stored.
         'models' => __DIR__ . '/Models',
     ]
 ];
