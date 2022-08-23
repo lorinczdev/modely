@@ -20,11 +20,6 @@ class ApiRouter
      */
     protected array $groupStack = [];
 
-    public function __construct()
-    {
-        $this->compiledRoutes = $this->getCachedRoutes();
-    }
-
     public function loadRoutes(Closure|string $routes): void
     {
         if ($routes instanceof Closure) {
@@ -265,6 +260,11 @@ class ApiRouter
 
     public function compileRoutes(): void
     {
+        if (! empty($routes = $this->getCachedRoutes())) {
+            $this->compiledRoutes = $routes;
+            return;
+        }
+
         $integrations = app(Modely::class)->getIntegrations();
 
         foreach ($integrations as $name => $integration) {
