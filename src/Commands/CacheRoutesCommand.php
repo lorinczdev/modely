@@ -13,6 +13,10 @@ class CacheRoutesCommand extends Command
 
     public function handle(): void
     {
+        cache()->forget('modely.routes');
+
+        app(ApiRouter::class)->compileRoutes();
+
         app(ApiRouter::class)->cacheRoutes();
     }
 }
