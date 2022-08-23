@@ -2,23 +2,43 @@
 
 namespace Lorinczdev\Modely\Tests;
 
-use Illuminate\Foundation\Application;
 use Lorinczdev\Modely\ModelyServiceProvider;
 use Lorinczdev\Modely\Tests\Mocks\Integration\IntegrationServiceProvider;
 use Orchestra\Testbench\TestCase as Orchestra;
+use Spatie\LaravelRay\RayServiceProvider;
 
 abstract class TestCase extends Orchestra
 {
     /**
-     * @param Application $app
+     * Get package providers.
      *
-     * @return array
+     * @param \Illuminate\Foundation\Application $app
+     *
+     * @return array<int, string>
      */
-    protected function getPackageProviders($app): array
+    protected function getPackageProviders($app)
     {
         return [
+            RayServiceProvider::class,
             ModelyServiceProvider::class,
             IntegrationServiceProvider::class,
         ];
+    }
+
+    /**
+     * Define environment setup.
+     *
+     * @param \Illuminate\Foundation\Application $app
+     * @return void
+     */
+    protected function defineEnvironment($app)
+    {
+        // Setup default database to use sqlite :memory:
+        $app['config']->set('database.default', 'testbench');
+        $app['config']->set('database.connections.testbench', [
+            'driver' => 'sqlite',
+            'database' => ':memory:',
+            'prefix' => '',
+        ]);
     }
 }

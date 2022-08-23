@@ -6,5 +6,5 @@ use Lorinczdev\Modely\Models\Model;
 
 class Post extends Model
 {
-
+    protected $fillable = ['title', 'body'];
 }

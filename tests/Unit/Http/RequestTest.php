@@ -1,15 +1,15 @@
 <?php
 
-use Lorinczdev\Modely\Http\Request;
-use Lorinczdev\Modely\Models\Model;
+use Lorinczdev\Modely\Http\ApiRequest;
+use Lorinczdev\Modely\Routing\ApiRoute;
 use Lorinczdev\Modely\Routing\UnknownRouteException;
 use Lorinczdev\Modely\Tests\Mocks\Integration\Models\User;
 
 it('can be initialized statically', function () {
     expect(
-        DummyRequest::for(new User)
+        DummyApiRequest::use(User::query()->getQuery())
     )
-        ->toBeInstanceOf(Request::class);
+        ->toBeInstanceOf(ApiRequest::class);
 });
 
 it('can send a request', function () {
@@ -17,57 +17,51 @@ it('can send a request', function () {
         '*/users' => \Illuminate\Support\Facades\Http::response(fixture('Users/index')),
     ]);
 
-    $response = DummyRequest::for(model: new User)->send('index');
+    $response = DummyApiRequest::use(User::query()->getQuery())->send('index');
 
     expect($response)
-        ->toBeInstanceOf(\Lorinczdev\Modely\Http\Response::class);
+        ->toBeInstanceOf(\Lorinczdev\Modely\Http\ApiResponse::class);
 });
 
 it('throws exception when route was not registered', function () {
-    DummyRequest::for(model: new User)->send('terminate');
+    DummyApiRequest::use(User::query()->getQuery())->send('terminate');
 })->throws(UnknownRouteException::class);
 
 it('allows to pass extra parameters', function () {
-    $request = DummyRequest::for(model: new User)->withParameters(['hello' => 'world']);
+    $request = DummyApiRequest::use(User::query()->getQuery())->withParameters(['hello' => 'world']);
 
     expect($request->parameters)
         ->toBe(['hello' => 'world']);
 });
 
 it('prepares url', function () {
-    $request = DummyRequest::for(model: new User(['id' => 1]))
+    $user = new User((['id' => 1]));
+
+    $request = DummyApiRequest::use($user->newQuery()->getQuery())
         ->withParameters(['color' => 'yellow']);
 
-    $route = [
-        'url' => 'users/{id}/{color}',
-    ];
+    $route = new ApiRoute('get', 'users/{id}/{color}', 'changeColor');
 
     expect($request->prepareUrl($route))
         ->toBe('users/1/yellow');
 });
 
-it('can get model', function () {
-    expect(DummyRequest::for(query: User::query()))
-        ->getModel()
-        ->toBeInstanceOf(User::class);
-});
-
 it('prepares http query string', function () {
 
     expect(
-        DummyRequest::for(
-            query: User::query()->where('name', 'Marek')
+        DummyApiRequest::use(
+            User::query()->getQuery()->where('name', 'Marek')
         )
     )
         ->buildQuery()
         ->toBe('?name=Marek');
 });
 
-class DummyRequest extends Lorinczdev\Modely\Http\Request
+class DummyApiRequest extends Lorinczdev\Modely\Http\ApiRequest
 {
     public array $parameters = [];
 
-    public function prepareUrl(array $route): string
+    public function prepareUrl(ApiRoute $route): string
     {
         return parent::prepareUrl($route);
     }
@@ -75,10 +69,5 @@ class DummyRequest extends Lorinczdev\Modely\Http\Request
     public function buildQuery(): string
     {
         return parent::buildQuery();
-    }
-
-    public function getModel(): Model
-    {
-        return parent::getModel();
     }
 }

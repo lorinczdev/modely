@@ -1,16 +1,24 @@
 <?php
 
-use Lorinczdev\Modely\Tests\Mocks\Integration\Client;
-use Lorinczdev\Modely\Tests\Mocks\Integration\IntegrationQueryBuilder;
+use Lorinczdev\Modely\Tests\Mocks\Integration\ApiClient;
+use Lorinczdev\Modely\Tests\Mocks\Integration\IntegrationUrlQuery;
 
 return [
     'name' => 'integration',
 
-    'client' => Client::class,
+    'client' => ApiClient::class,
 
     'query' => [
-        'builder' => IntegrationQueryBuilder::class
+        'compiler' => IntegrationUrlQuery::class,
     ],
 
+    'request' => \Lorinczdev\Modely\Tests\Mocks\Integration\ApiRequest::class,
+
+    'response' => \Lorinczdev\Modely\Tests\Mocks\Integration\ApiResponse::class,
+
     'routes' => __DIR__ . '/routes.php',
+
+    'dir' => [
+        'models' => __DIR__ . '/Models',
+    ]
 ];

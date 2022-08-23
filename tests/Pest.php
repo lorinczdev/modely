@@ -10,11 +10,12 @@ function fixture(string $name): array
         filename: __DIR__ . "/Fixtures/$name.json",
     );
 
-    if (!$file) {
+    if (! $file) {
         throw new InvalidArgumentException(
             message: "Cannot find fixture: [$name] at tests/Fixtures/$name.json",
         );
     }
+
 
     return json_decode($file, true, 512, JSON_THROW_ON_ERROR);
 }

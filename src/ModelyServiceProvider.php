@@ -3,8 +3,9 @@
 namespace Lorinczdev\Modely;
 
 use Illuminate\Support\ServiceProvider;
-use Lorinczdev\Modely\Routing\Route;
-use Lorinczdev\Modely\Routing\RouteResourceOptions;
+use Lorinczdev\Modely\Commands\CacheRoutesCommand;
+use Lorinczdev\Modely\Commands\ClearCacheCommand;
+use Lorinczdev\Modely\Routing\ApiRouter;
 
 class ModelyServiceProvider extends ServiceProvider
 {
@@ -15,6 +16,8 @@ class ModelyServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        app(ApiRouter::class)->compileRoutes();
+
         // $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'lorinczdev');
         // $this->loadViewsFrom(__DIR__.'/../resources/views', 'lorinczdev');
         // $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
@@ -24,31 +27,6 @@ class ModelyServiceProvider extends ServiceProvider
         if ($this->app->runningInConsole()) {
             $this->bootForConsole();
         }
-    }
-
-    /**
-     * Register any package services.
-     *
-     * @return void
-     */
-    public function register(): void
-    {
-        $this->mergeConfigFrom(__DIR__ . '/../config/modely.php', 'modely');
-
-        // Register the service the package provides.
-        $this->app->singleton(Modely::class, fn($app) => new Modely());
-        $this->app->singleton(Route::class, fn() => new Route());
-        $this->app->singleton(RouteResourceOptions::class, fn() => new RouteResourceOptions());
-    }
-
-    /**
-     * Get the services provided by the provider.
-     *
-     * @return array
-     */
-    public function provides(): array
-    {
-        return ['modely'];
     }
 
     /**
@@ -79,6 +57,33 @@ class ModelyServiceProvider extends ServiceProvider
         ], 'modely.views');*/
 
         // Registering package commands.
-        // $this->commands([]);
+        $this->commands([
+            CacheRoutesCommand::class,
+            ClearCacheCommand::class,
+        ]);
+    }
+
+    /**
+     * Register any package services.
+     *
+     * @return void
+     */
+    public function register(): void
+    {
+        $this->mergeConfigFrom(__DIR__ . '/../config/modely.php', 'modely');
+
+        // Register the service the package provides.
+        $this->app->scoped(Modely::class, fn () => new Modely());
+        $this->app->scoped(ApiRouter::class, fn () => new ApiRouter());
+    }
+
+    /**
+     * Get the services provided by the provider.
+     *
+     * @return array
+     */
+    public function provides(): array
+    {
+        return ['modely'];
     }
 }

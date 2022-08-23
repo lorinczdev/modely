@@ -3,8 +3,8 @@
 namespace Lorinczdev\Modely\Models\Relations;
 
 use Illuminate\Support\Collection;
+use Lorinczdev\Modely\Models\Builder;
 use Lorinczdev\Modely\Models\Model;
-use Lorinczdev\Modely\Models\Query;
 use Str;
 
 abstract class HasOneOrMany
@@ -74,7 +74,7 @@ abstract class HasOneOrMany
         }
 
         // Delete single related model
-        if (!$this->isHasMany()) {
+        if (! $this->isHasMany()) {
             $this->parent->{$this->relationName()}->delete();
         }
     }
@@ -116,6 +116,22 @@ abstract class HasOneOrMany
     }
 
     /**
+     * Return query instance base on relation model class.
+     */
+    protected function query(?array $query = []): Builder
+    {
+        // Initiate relation model
+        /** @var Model $model */
+        $model = new $this->relationModelClass();
+
+        // Set foreign keys
+        $this->setForeignKey($model);
+
+        // Return new query instance for relation model
+        return $model->newQuery();
+    }
+
+    /**
      * Get records.
      *
      * @return Collection<Model>
@@ -126,25 +142,9 @@ abstract class HasOneOrMany
         $models = $this->query()->get();
 
         // Set foreign keys for each model
-        $models = $models->map(fn($model) => $this->setForeignKey($model));
+        $models = $models->map(fn ($model) => $this->setForeignKey($model));
 
         return $models;
-    }
-
-    /**
-     * Return query instance base on relation model class.
-     */
-    protected function query(?array $query = []): Query
-    {
-        // Initiate relation model
-        /** @var Model $model */
-        $model = new $this->relationModelClass();
-
-        // Set foreign keys
-        $this->setForeignKey($model);
-
-        // Return new query instance for relation model
-        return $model->newQuery(query: $query);
     }
 
     /**
@@ -172,7 +172,7 @@ abstract class HasOneOrMany
         }
 
         // Return collection with items transformed to models
-        return collect($data)->map(fn($item) => $this->fillOne($item));
+        return collect($data)->map(fn ($item) => $this->fillOne($item));
     }
 
     /**
@@ -181,12 +181,12 @@ abstract class HasOneOrMany
     protected function fillOne(array|Model|null $data = null): ?Model
     {
         // Return null when data is null
-        if (!$data) {
+        if (! $data) {
             return null;
         }
 
         // Transform data to a model if not done already
-        if (!$data instanceof Model) {
+        if (! $data instanceof Model) {
             $model = new $this->relationModelClass($data, $this->parent);
         } else {
             $model = $data;
@@ -198,7 +198,7 @@ abstract class HasOneOrMany
         return $model;
     }
 
-    public function where(string|array $column, mixed $operator = null, mixed $value = null): Query
+    public function where(string|array $column, mixed $operator = null, mixed $value = null): Builder
     {
         return $this->query()->where(...func_get_args());
     }

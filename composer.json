@@ -10,11 +10,16 @@
         }
     ],
     "homepage": "https://github.com/lorinczdev/modely",
-    "keywords": ["Laravel", "Modely"],
+    "keywords": [
+        "Laravel",
+        "Modely"
+    ],
     "require": {
         "php": "^8.1",
         "illuminate/support": "~9",
-        "guzzlehttp/guzzle": "^7.4"
+        "guzzlehttp/guzzle": "^7.4",
+        "spatie/ray": "^1.36",
+        "spatie/laravel-ray": "^1.30"
     },
     "require-dev": {
         "roave/security-advisories": "dev-latest",
@@ -25,7 +30,9 @@
         "barryvdh/laravel-ide-helper": "^2.12",
         "vimeo/psalm": "^4.24",
         "psalm/plugin-laravel": "^2.0",
-        "nunomaduro/larastan": "^2.0"
+        "nunomaduro/larastan": "^2.0",
+        "pestphp/pest-plugin-mock": "^1.0",
+        "nunomaduro/collision": "^6.2"
     },
     "autoload": {
         "psr-4": {
@@ -46,6 +53,11 @@
                 "Modely": "Lorinczdev\\Modely\\Facades\\Modely"
             }
         }
+    },
+    "scripts": {
+        "post-autoload-dump": [
+            "@php ./vendor/bin/testbench package:discover --ansi"
+        ]
     },
     "config": {
         "allow-plugins": {

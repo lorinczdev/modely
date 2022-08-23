@@ -3,7 +3,7 @@
 namespace Lorinczdev\Modely\Models\Pagination;
 
 use Illuminate\Support\Collection;
-use Lorinczdev\Modely\Models\Query;
+use Lorinczdev\Modely\Models\Builder;
 
 class Pagination extends Collection
 {
@@ -16,43 +16,17 @@ class Pagination extends Collection
     protected bool $emptyResponse = false;
 
     public function __construct(
-        protected Query $query,
-        protected int   $perPage = 15,
-        protected int   $page = 1
+        protected Builder $query,
+        protected int     $perPage = 15,
+        protected int     $page = 1,
+        protected string  $method = 'index'
     )
     {
         parent::__construct();
 
-        $this->query->page($this->page);
-        $this->query->limit($this->perPage);
+        $this->query->forPage($this->page, $this->perPage);
 
         $this->collection = new PaginateCollection($this->fetch());
-    }
-
-    public function next(): static
-    {
-        ++$this->page;
-
-        $this->query->page($this->page);
-
-        $this->collection = new PaginateCollection($this->fetch());
-
-        return $this;
-    }
-
-    public function previous(): static
-    {
-        if ($this->page === 1) {
-            return $this;
-        }
-
-        --$this->page;
-
-        $this->query->page($this->page);
-
-        $this->collection = new PaginateCollection($this->fetch());
-
-        return $this;
     }
 
     protected function fetch(): array
@@ -62,35 +36,15 @@ class Pagination extends Collection
         );
     }
 
-    public function isLastPage(): bool
+    public function previous(): static
     {
-        return $this->collection->count() < $this->perPage;
-    }
-
-    public function more(): static
-    {
-        ++$this->page;
-
-        $this->query->page($this->page);
-
-        $this->collection = $this->collection->merge($data = $this->fetch());
-
-        if (empty($data)) {
-            $this->emptyResponse = true;
+        if ($this->page === 1) {
+            return $this;
         }
 
-        return $this;
-    }
+        $this->query->forPage(--$this->page, $this->perPage);
 
-    public function fetchAll(int $limitPages = 0): static
-    {
-        while ($this->collection->count() % $this->perPage === 0 && !$this->emptyResponse) {
-            $this->more();
-
-            if ($limitPages !== 0 && $this->page >= $limitPages) {
-                break;
-            }
-        }
+        $this->collection = new PaginateCollection($this->fetch());
 
         return $this;
     }
@@ -105,18 +59,45 @@ class Pagination extends Collection
         return $this->collection;
     }
 
+    /**
+     * @param int $limitPages 0 - all pages
+     * @return Pagination
+     */
+    public function fetchAll(int $limitPages = 0): static
+    {
+        while ($this->collection->count() % $this->perPage === 0 && ! $this->emptyResponse) {
+            $this->more();
+
+            if ($limitPages !== 0 && $this->page >= $limitPages) {
+                break;
+            }
+        }
+
+        return $this;
+    }
+
+    public function more(): static
+    {
+        $this->query->forPage(++$this->page, $this->perPage);
+
+        $this->collection = $this->collection->merge($data = $this->fetch());
+
+        if (empty($data)) {
+            $this->emptyResponse = true;
+        }
+
+        return $this;
+    }
+
     public function untilLast(callable $callback): void
     {
-        while (true) {
-            $continue = true;
+        $continue = true;
+
+        while ($continue) {
 
             $this->getCollection()->each(function ($item) use (&$continue, $callback) {
                 $continue = $callback($item);
             });
-
-            if ($continue === false) {
-                break;
-            }
 
             if ($this->isLastPage()) {
                 break;
@@ -124,6 +105,20 @@ class Pagination extends Collection
 
             $this->next();
         }
+    }
+
+    public function isLastPage(): bool
+    {
+        return $this->collection->count() < $this->perPage;
+    }
+
+    public function next(): static
+    {
+        $this->query->forPage(++$this->page, $this->perPage);
+
+        $this->collection = new PaginateCollection($this->fetch());
+
+        return $this;
     }
 
     public function toArray(): array

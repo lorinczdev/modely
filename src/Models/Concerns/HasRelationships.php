@@ -17,11 +17,6 @@ trait HasRelationships
      */
     protected array $relations = [];
 
-    public function getForeignKey(): string
-    {
-        return Str::snake(class_basename($this)) . '_' . $this->getKeyName();
-    }
-
     /**
      * Determine if the given relation is loaded.
      */
@@ -56,6 +51,11 @@ trait HasRelationships
         $localKey = $localKey ?: $this->getKeyName();
 
         return new HasMany($className, $this, $foreignKey, $localKey);
+    }
+
+    public function getForeignKey(): string
+    {
+        return Str::snake(class_basename($this)) . '_' . $this->getKeyName();
     }
 
     /**

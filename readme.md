@@ -45,13 +45,21 @@ If you discover any security related issues, please email author@email.com inste
 MIT. Please see the [license file](license.md) for more information.
 
 [ico-version]: https://img.shields.io/packagist/v/lorinczdev/modely.svg?style=flat-square
+
 [ico-downloads]: https://img.shields.io/packagist/dt/lorinczdev/modely.svg?style=flat-square
+
 [ico-travis]: https://img.shields.io/travis/lorinczdev/modely/master.svg?style=flat-square
+
 [ico-styleci]: https://styleci.io/repos/12345678/shield
 
 [link-packagist]: https://packagist.org/packages/lorinczdev/modely
+
 [link-downloads]: https://packagist.org/packages/lorinczdev/modely
+
 [link-travis]: https://travis-ci.org/lorinczdev/modely
+
 [link-styleci]: https://styleci.io/repos/12345678
+
 [link-author]: https://github.com/lorinczdev
+
 [link-contributors]: ../../contributors

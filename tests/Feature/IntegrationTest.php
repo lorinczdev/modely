@@ -1,34 +1,9 @@
 <?php
 
+use Illuminate\Http\Client\Request;
 use Illuminate\Support\Facades\Http;
-use Lorinczdev\Modely\Models\Model;
-use Lorinczdev\Modely\Tests\Mocks\Integration\IntegrationQueryBuilder;
 use Lorinczdev\Modely\Tests\Mocks\Integration\Models\Post;
 use Lorinczdev\Modely\Tests\Mocks\Integration\Models\User;
-
-
-it('can read users', function () {
-    Http::fake(['*/users' => Http::response(body: fixture('Users/index'))]);
-
-    $users = User::get();
-
-    expect($users)->toBeCollection();
-
-    $users = User::all();
-
-    expect($users)->toBeCollection();
-});
-
-it('can read user detail', function () {
-    Http::fake(['*/users/1' => Http::response(body: fixture('Users/show'))]);
-
-    $user = User::find(1);
-
-    expect($user)
-        ->toBeInstanceOf(Model::class)
-        ->id->toEqual('1')
-        ->name->toEqual('Marek');
-});
 
 it('can create a user', function () {
     Http::fake(['*/users' => Http::response(body: fixture('Users/store'))]);
@@ -36,8 +11,8 @@ it('can create a user', function () {
     $user = User::create(['name' => 'Marek']);
 
     expect($user)
-        ->toBeInstanceOf(Model::class)
-        ->id->toEqual('1')
+        ->toBeInstanceOf(User::class)
+        ->id->toEqual(1)
         ->name->toEqual('Marek');
 });
 
@@ -64,12 +39,12 @@ it('can delete a user', function () {
 it('can read user posts', function () {
     Http::fake([
         '*/users/1' => Http::response(body: fixture('Users/show')),
-        '*/users/1/posts' => Http::response(body: fixture('Posts/index'))
+        '*/users/1/posts?title=Post+A' => Http::response(body: fixture('Posts/index'))
     ]);
 
     $user = User::find(1);
 
-    $posts = $user->posts()->get();
+    $posts = $user->posts()->where('title', 'Post A')->get();
 
     expect($posts)->toHaveCount(1);
 });
@@ -107,15 +82,6 @@ test('user can delete all related posts', function () {
     expect($user->posts()->get())->toHaveCount(0);
 });
 
-it('has custom query builder', function () {
-    $user = new User();
-
-    expect($user->getConfig()['query']['builder'])
-        ->toEqual(IntegrationQueryBuilder::class)
-        ->and($user->newQuery()->builder())
-        ->toBeInstanceOf(IntegrationQueryBuilder::class);
-});
-
 it('user can be promoted', function () {
     Http::fake([
         '*/users/1' => Http::response(body: fixture('Users/show')),
@@ -127,4 +93,35 @@ it('user can be promoted', function () {
     $user->promote();
 
     expect($user)->toBeInstanceOf(User::class)->id->toEqual(1);
+});
+
+it('can send a multipart request with file', function () {
+    Http::fake();
+
+    $user = new User(['id' => 1]);
+
+    $user->uploadAvatar([
+        'name' => 'file',
+        'contents' => 'yellow banana',
+        'filename' => null,
+        'headers' => []
+    ]);
+
+    Http::assertSent(
+        fn (Request $request) => $request->isMultipart() && $request->hasFile('file')
+    );
+});
+
+it('can send a form request', function () {
+    Http::fake();
+
+    $user = new User(['id' => 1]);
+
+    $user->options([
+        'role' => 'cat',
+    ]);
+
+    Http::assertSent(
+        fn (Request $request) => $request->isForm() && $request['role'] === 'cat'
+    );
 });
