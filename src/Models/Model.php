@@ -272,7 +272,7 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
     {
         $model = $this->newInstance([], true);
 
-        $model->setRawAttributes($attributes, true);
+        $model->fill($attributes, true);
 
         // $model->fireModelEvent('retrieved', false);
 
