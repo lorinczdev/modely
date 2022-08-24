@@ -109,7 +109,7 @@ abstract class ApiClient
             ->label('Modely')
             ->orange();
 
-        Log::debug(json_encode($data));
+        // Log::debug(json_encode($data));
     }
 
     protected function getHttpClient(): PendingRequest
