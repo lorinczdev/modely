@@ -10,13 +10,6 @@ use Lorinczdev\Modely\Tests\Mocks\Integration\Models\Categories\Category;
 use Lorinczdev\Modely\Tests\Mocks\Integration\Models\Post;
 use Lorinczdev\Modely\Tests\Mocks\Integration\Models\User;
 
-it('each model has static variable with config', function () {
-    $user = new User();
-
-    expect($user->getConfig())->toBeArray()
-        ->and($user->getConfig())->toBe(require __DIR__ . '/../../Mocks/Integration/config.php');
-});
-
 it('can get client', function () {
     $user = new User();
 
