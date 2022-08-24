@@ -3,7 +3,10 @@
 use Illuminate\Http\Client\Request;
 use Illuminate\Support\Collection;
 use Lorinczdev\Modely\Models\Builder;
+use Lorinczdev\Modely\Tests\Mocks\AnotherIntegration\Models\Cat;
+use Lorinczdev\Modely\Tests\Mocks\AnotherIntegration\Models\Insects\Spider;
 use Lorinczdev\Modely\Tests\Mocks\Integration\ApiClient;
+use Lorinczdev\Modely\Tests\Mocks\Integration\Models\Categories\Category;
 use Lorinczdev\Modely\Tests\Mocks\Integration\Models\Post;
 use Lorinczdev\Modely\Tests\Mocks\Integration\Models\User;
 
@@ -81,6 +84,18 @@ it('can be serialized', function () {
     $user = new User(['id' => 1]);
 
     expect(json_encode($user))->toBe('{"id":1}');
+});
+
+it('when registered it prepares models', function () {
+    // Models in top directory
+    expect((new Cat)->getConfig())->toBeArray()
+        ->and((new User)->getConfig())->toBeArray()
+        ->and((new Cat)->getConfig())->not()->toBe((new User)->getConfig());
+
+    // Models inside subdirectory
+    expect((new Category)->getConfig())->toBeArray()
+        ->and((new Spider)->getConfig())->toBeArray()
+        ->and((new Spider)->getConfig())->not()->toBe((new Category)->getConfig());
 });
 
 it('forwards calls', function () {

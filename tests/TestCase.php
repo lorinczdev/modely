@@ -3,6 +3,7 @@
 namespace Lorinczdev\Modely\Tests;
 
 use Lorinczdev\Modely\ModelyServiceProvider;
+use Lorinczdev\Modely\Tests\Mocks\AnotherIntegration\AnotherIntegrationServiceProvider;
 use Lorinczdev\Modely\Tests\Mocks\Integration\IntegrationServiceProvider;
 use Orchestra\Testbench\TestCase as Orchestra;
 use Spatie\LaravelRay\RayServiceProvider;
@@ -22,6 +23,7 @@ abstract class TestCase extends Orchestra
             RayServiceProvider::class,
             ModelyServiceProvider::class,
             IntegrationServiceProvider::class,
+            AnotherIntegrationServiceProvider::class,
         ];
     }
 
