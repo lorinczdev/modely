@@ -31,21 +31,25 @@ class ApiRouter
 
     public function compile(): void
     {
-        $routes = $this->getRoutesByIntegration($this->integration);
+        foreach (app(Modely::class)->getIntegrations() as $integration => $config) {
+            $this->setIntegration($integration);
 
-        $routes
-            ->each(function ($route) use ($routes) {
-                if ($route instanceof ApiRouteResource) {
-                    $route->compile($routes);
-                }
-            });
+            $routes = $this->getRoutesByIntegration($integration);
 
-        $routes = $this->getRoutesByIntegration($this->integration);
+            $routes
+                ->each(function ($route) use ($routes) {
+                    if ($route instanceof ApiRouteResource) {
+                        $route->compile($routes);
+                    }
+                });
 
-        $this->compiledRoutes[$this->integration] = $routes
-            ->filter(fn ($route) => ! ($route instanceof ApiRouteResource)
-                && ! $route->reusableAction
-            );
+            $routes = $this->getRoutesByIntegration($integration);
+
+            $this->compiledRoutes[$integration] = $routes
+                ->filter(fn ($route) => ! ($route instanceof ApiRouteResource)
+                    && ! $route->reusableAction
+                );
+        }
     }
 
     public function getRoutesByIntegration(string $integration): Collection
@@ -230,7 +234,7 @@ class ApiRouter
 
     public function find(string $model, string $action, string $method = null): ?ApiRoute
     {
-        $config = $model::$config;
+        $config = app($model)->getConfig();
 
         $routes = $this->compiledRoutes[$config['name']] ?? collect();
 
@@ -268,12 +272,12 @@ class ApiRouter
         $integrations = app(Modely::class)->getIntegrations();
 
         foreach ($integrations as $name => $integration) {
-            app(__CLASS__)
+            app(static::class)
                 ->setIntegration($name)
                 ->loadRoutes($integration['routes']);
         }
 
-        app(__CLASS__)->compile();
+        app(static::class)->compile();
     }
 
     public function cacheRoutes(): void
