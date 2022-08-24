@@ -50,7 +50,7 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
     /**
      * @var array Project configuration.
      */
-    public static array $config;
+    protected array $config;
     /**
      * Indicates if the model exists.
      */
@@ -496,8 +496,6 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
 
     /**
      * Reload a fresh model instance from the database.
-     *
-     * @throws UnknownRouteException
      */
     public function fresh(): static|null
     {
@@ -510,8 +508,6 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
 
     /**
      * Reload the current model instance with fresh attributes from the database.
-     *
-     * @throws UnknownRouteException
      */
     public function refresh(): static
     {
@@ -530,7 +526,7 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
 
     public function setConfig(array $config): void
     {
-        static::$config = $config;
+        $this->config = $config;
     }
 
     public function getClient(): ApiClient
@@ -540,7 +536,7 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
 
     public function getConfig(): array
     {
-        return static::$config;
+        return app(static::class)->config;
     }
 
     public function execute(string $method, array $data = []): \Lorinczdev\Modely\Http\ApiResponse
