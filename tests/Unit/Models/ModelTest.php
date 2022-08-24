@@ -77,6 +77,12 @@ it('can execute any registered route', function () {
     );
 });
 
+it('can be serialized', function () {
+    $user = new User(['id' => 1]);
+
+    expect(json_encode($user))->toBe('{"id":1}');
+});
+
 it('forwards calls', function () {
 
 })->skip();

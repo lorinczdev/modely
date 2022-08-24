@@ -9,6 +9,7 @@ use Illuminate\Contracts\Support\Jsonable;
 use Illuminate\Database\Eloquent\Concerns\GuardsAttributes;
 use Illuminate\Database\Eloquent\Concerns\HasAttributes;
 use Illuminate\Database\Eloquent\Concerns\HasEvents;
+use Illuminate\Database\Eloquent\Concerns\HidesAttributes;
 use Illuminate\Database\Eloquent\JsonEncodingException;
 use Illuminate\Database\Eloquent\MassAssignmentException;
 use Illuminate\Support\Collection;
@@ -32,6 +33,7 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
     use HasTimestamps;
     use ForwardsCalls;
     use HasEvents;
+    use HidesAttributes;
 
     /**
      * The name of the "created at" column.
