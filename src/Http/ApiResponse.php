@@ -12,13 +12,13 @@ class ApiResponse implements Arrayable, ArrayAccess
 
     public function __construct(protected \Illuminate\Http\Client\Response $response)
     {
+        $this->log();
+
         $this->handleResponse($response);
     }
 
     protected function handleResponse(\Illuminate\Http\Client\Response $response): void
     {
-        $this->log();
-
         if ($this->isJson()) {
             $data = $response->json();
         } else {
