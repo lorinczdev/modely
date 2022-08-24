@@ -24,6 +24,7 @@ use Lorinczdev\Modely\Routing\UnknownRouteException;
 
 /**
  * @mixin Builder
+ * @method static static first()
  */
 abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializable
 {
