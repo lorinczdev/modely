@@ -73,8 +73,8 @@ class ModelyServiceProvider extends ServiceProvider
         $this->mergeConfigFrom(__DIR__ . '/../config/modely.php', 'modely');
 
         // Register the service the package provides.
-        $this->app->scoped(Modely::class, fn () => new Modely());
-        $this->app->scoped(ApiRouter::class, fn () => new ApiRouter());
+        $this->app->singleton(Modely::class, fn () => new Modely());
+        $this->app->singleton(ApiRouter::class, fn () => new ApiRouter());
     }
 
     /**
