@@ -2,6 +2,8 @@
 
 namespace Lorinczdev\Modely\Models\Concerns;
 
+use Illuminate\Support\Collection;
+use Lorinczdev\Modely\Models\Model;
 use Lorinczdev\Modely\Models\Relations\BelongsTo;
 use Lorinczdev\Modely\Models\Relations\HasMany;
 use Lorinczdev\Modely\Models\Relations\HasOne;
@@ -24,6 +26,11 @@ trait HasRelationships
     public function relationLoaded(string $key): bool
     {
         return array_key_exists($key, $this->relations);
+    }
+
+    public function isRelationFillable(mixed $value): bool
+    {
+        return in_array(gettype($value), [Model::class, 'array', Collection::class, 'null']);
     }
 
     /**

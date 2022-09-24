@@ -117,7 +117,7 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
         $totallyGuarded = $this->totallyGuarded();
 
         foreach ($this->fillableFromArray($attributes) as $key => $value) {
-            if ($this->isRelation($key)) {
+            if ($this->isRelation($key) && $this->isRelationFillable($value)) {
                 $value = $this->{$key}()->fill($value);
             }
 
