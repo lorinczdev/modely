@@ -10,24 +10,23 @@ use Lorinczdev\Modely\Models\Model;
 abstract class Relation
 {
     /**
-     * @param class-string<Model> $relationModelClass
-     * @param Model               $parent
-     * @param string              $foreignKey
-     * @param string              $localKey
+     * @param  class-string<Model>  $relationModelClass
+     * @param  Model  $parent
+     * @param  string  $foreignKey
+     * @param  string  $localKey
      */
     public function __construct(
         public string $relationModelClass,
-        public Model  $parent,
+        public Model $parent,
         public string $foreignKey,
         public string $localKey
-    )
-    {
+    ) {
     }
 
     /**
      * Create new record.
      *
-     * @param array|null $data
+     * @param  array|null  $data
      * @return Model
      */
     public function create(?array $data = []): Model

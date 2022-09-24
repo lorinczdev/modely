@@ -32,7 +32,8 @@
         "psalm/plugin-laravel": "^2.0",
         "nunomaduro/larastan": "^2.0",
         "pestphp/pest-plugin-mock": "^1.0",
-        "nunomaduro/collision": "^6.2"
+        "nunomaduro/collision": "^6.2",
+        "laravel/pint": "^1.2"
     },
     "autoload": {
         "psr-4": {

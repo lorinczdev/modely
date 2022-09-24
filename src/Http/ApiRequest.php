@@ -23,10 +23,9 @@ class ApiRequest
 
     public function send(
         string $action,
-        array  $data = [],
+        array $data = [],
         string $method = null
-    ): ApiResponse
-    {
+    ): ApiResponse {
         $client = $this->getClient();
 
         $route = $this->getRoute($action, $method);
@@ -75,11 +74,11 @@ class ApiRequest
         $url = $route->uri;
 
         foreach ([
-                     $this->query->getModel()->getKeyName() => $this->query->getModel()->getKey(),
-                     $this->query->getModel()->foreignKeyName => $this->query->getModel()->foreignKey,
-                     ...$this->parameters
-                 ] as $key => $value) {
-            $url = Str::replace('{' . $key . '}', $value, $url);
+            $this->query->getModel()->getKeyName() => $this->query->getModel()->getKey(),
+            $this->query->getModel()->foreignKeyName => $this->query->getModel()->foreignKey,
+            ...$this->parameters,
+        ] as $key => $value) {
+            $url = Str::replace('{'.$key.'}', $value, $url);
         }
 
         if ($this->query) {

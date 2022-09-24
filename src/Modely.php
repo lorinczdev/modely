@@ -21,7 +21,7 @@ class Modely
 
     protected function getConfig(string $path)
     {
-        return require $path . '/config.php';
+        return require $path.'/config.php';
     }
 
     protected function prepareModels(array $config): void
@@ -79,4 +79,3 @@ class Modely
         return $this->integrations;
     }
 }
-

@@ -36,7 +36,7 @@ class ApiRouteGroup
     protected static function formatAs(array $new, array $old): array
     {
         if (isset($old['as'])) {
-            $new['as'] = $old['as'] . ($new['as'] ?? '');
+            $new['as'] = $old['as'].($new['as'] ?? '');
         }
 
         return $new;
@@ -49,7 +49,7 @@ class ApiRouteGroup
     {
         if (isset($new['namespace'])) {
             return isset($old['namespace']) && ! str_starts_with($new['namespace'], '\\')
-                ? trim($old['namespace'], '\\') . '\\' . trim($new['namespace'], '\\')
+                ? trim($old['namespace'], '\\').'\\'.trim($new['namespace'], '\\')
                 : trim($new['namespace'], '\\');
         }
 
@@ -64,9 +64,9 @@ class ApiRouteGroup
         $old = $old['prefix'] ?? '';
 
         if ($prependExistingPrefix) {
-            return isset($new['prefix']) ? trim($old, '/') . '/' . trim($new['prefix'], '/') : $old;
+            return isset($new['prefix']) ? trim($old, '/').'/'.trim($new['prefix'], '/') : $old;
         } else {
-            return isset($new['prefix']) ? trim($new['prefix'], '/') . '/' . trim($old, '/') : $old;
+            return isset($new['prefix']) ? trim($new['prefix'], '/').'/'.trim($old, '/') : $old;
         }
     }
 

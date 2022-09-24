@@ -16,6 +16,7 @@ abstract class ApiClient
     protected string $method;
 
     protected ?array $payload;
+
     protected ?array $multipartPayload = null;
 
     protected string $contentType = 'json';
@@ -160,5 +161,4 @@ abstract class ApiClient
     {
         return $response;
     }
-
 }

@@ -14,12 +14,12 @@ $user->uploadAvatar([
     'name' => 'file',
     'contents' => '',
     'filename' => null,
-    'headers' => []
+    'headers' => [],
 ]);
 
 // execute 'options' action that'll send data application/x-www-form-urlencoded
 $user->options([
-    'role' => 'cat'
+    'role' => 'cat',
 ]);
 
 // custom actions

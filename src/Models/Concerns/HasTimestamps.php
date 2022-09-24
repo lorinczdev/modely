@@ -15,7 +15,7 @@ trait HasTimestamps
     /**
      * Update the model's update timestamp.
      *
-     * @param string|null $attribute
+     * @param  string|null  $attribute
      * @return bool
      */
     public function touch($attribute = null)
@@ -92,7 +92,7 @@ trait HasTimestamps
     /**
      * Set the value of the "updated at" attribute.
      *
-     * @param mixed $value
+     * @param  mixed  $value
      * @return $this
      */
     public function setUpdatedAt($value)
@@ -115,7 +115,7 @@ trait HasTimestamps
     /**
      * Set the value of the "created at" attribute.
      *
-     * @param mixed $value
+     * @param  mixed  $value
      * @return $this
      */
     public function setCreatedAt($value)
@@ -155,4 +155,3 @@ trait HasTimestamps
         return $this->qualifyColumn($this->getUpdatedAtColumn());
     }
 }
-

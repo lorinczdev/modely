@@ -3,7 +3,6 @@
 use Illuminate\Http\Client\PendingRequest;
 use Lorinczdev\Modely\Http\ApiClient;
 
-
 it('uses laravel http client', function () {
     $client = new DummyApiClient();
 

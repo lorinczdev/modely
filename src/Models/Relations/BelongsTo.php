@@ -2,8 +2,6 @@
 
 namespace Lorinczdev\Modely\Models\Relations;
 
-use Illuminate\Support\Collection;
-use Lorinczdev\Modely\Models\Builder;
 use Lorinczdev\Modely\Models\Model;
 
 class BelongsTo extends Relation

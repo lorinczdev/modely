@@ -17,11 +17,10 @@ class Pagination extends Collection
 
     public function __construct(
         protected Builder $query,
-        protected int     $perPage = 15,
-        protected int     $page = 1,
-        protected string  $method = 'index'
-    )
-    {
+        protected int $perPage = 15,
+        protected int $page = 1,
+        protected string $method = 'index'
+    ) {
         parent::__construct();
 
         $this->query->forPage($this->page, $this->perPage);
@@ -60,7 +59,7 @@ class Pagination extends Collection
     }
 
     /**
-     * @param int $limitPages 0 - all pages
+     * @param  int  $limitPages 0 - all pages
      * @return Pagination
      */
     public function fetchAll(int $limitPages = 0): static
@@ -94,7 +93,6 @@ class Pagination extends Collection
         $continue = true;
 
         while ($continue) {
-
             $this->getCollection()->each(function ($item) use (&$continue, $callback) {
                 $continue = $callback($item);
             });

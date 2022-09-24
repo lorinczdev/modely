@@ -1,9 +1,7 @@
 <?php
 
-use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Http;
 use Lorinczdev\Modely\Tests\Mocks\Integration\Models\Categories\Category;
-use Lorinczdev\Modely\Tests\Mocks\Integration\Models\Post;
 use Lorinczdev\Modely\Tests\Mocks\Integration\Models\User;
 
 it('works', function () {

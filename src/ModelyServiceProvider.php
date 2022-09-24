@@ -38,7 +38,7 @@ class ModelyServiceProvider extends ServiceProvider
     {
         // Publishing the configuration file.
         $this->publishes([
-            __DIR__ . '/../config/modely.php' => config_path('modely.php'),
+            __DIR__.'/../config/modely.php' => config_path('modely.php'),
         ], 'modely.config');
 
         // Publishing the views.
@@ -70,7 +70,7 @@ class ModelyServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $this->mergeConfigFrom(__DIR__ . '/../config/modely.php', 'modely');
+        $this->mergeConfigFrom(__DIR__.'/../config/modely.php', 'modely');
 
         // Register the service the package provides.
         $this->app->singleton(Modely::class, fn () => new Modely());

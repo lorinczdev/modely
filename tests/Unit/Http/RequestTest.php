@@ -47,7 +47,6 @@ it('prepares url', function () {
 });
 
 it('prepares http query string', function () {
-
     expect(
         DummyApiRequest::use(
             User::query()->getQuery()->where('name', 'Marek')

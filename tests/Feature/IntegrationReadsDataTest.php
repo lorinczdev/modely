@@ -23,7 +23,6 @@ it('can read users', function () {
 });
 
 it('can filter results', function () {
-
     Http::fake(['*/users?name=Marek' => Http::response(body: fixture('Users/index'))]);
 
     $users = User::where('name', 'Marek')->get();

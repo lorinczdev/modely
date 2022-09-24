@@ -76,7 +76,7 @@ class ApiRouter
 
     protected function pushToRouteCollection(ApiRoute|ApiRouteResource $route): void
     {
-        if (! isset ($this->routes[$this->integration])) {
+        if (! isset($this->routes[$this->integration])) {
             $this->routes[$this->integration] = collect();
         }
 
@@ -121,7 +121,7 @@ class ApiRouter
      */
     protected function prefix(string $uri): string
     {
-        return trim(trim($this->getLastGroupPrefix(), '/') . '/' . trim($uri, '/'), '/') ?: '/';
+        return trim(trim($this->getLastGroupPrefix(), '/').'/'.trim($uri, '/'), '/') ?: '/';
     }
 
     /**
@@ -266,6 +266,7 @@ class ApiRouter
     {
         if (! empty($routes = $this->getCachedRoutes())) {
             $this->compiledRoutes = $routes;
+
             return;
         }
 

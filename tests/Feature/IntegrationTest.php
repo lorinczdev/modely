@@ -39,7 +39,7 @@ it('can delete a user', function () {
 it('can read user posts', function () {
     Http::fake([
         '*/users/1' => Http::response(body: fixture('Users/show')),
-        '*/users/1/posts?title=Post+A' => Http::response(body: fixture('Posts/index'))
+        '*/users/1/posts?title=Post+A' => Http::response(body: fixture('Posts/index')),
     ]);
 
     $user = User::find(1);
@@ -52,7 +52,7 @@ it('can read user posts', function () {
 it('user can create a post', function () {
     Http::fake([
         '*/users/1' => Http::response(body: fixture('Users/show')),
-        '*/users/1/posts' => Http::response(body: fixture('Posts/store'))
+        '*/users/1/posts' => Http::response(body: fixture('Posts/store')),
     ]);
 
     $user = User::find(1);
@@ -70,7 +70,7 @@ test('user can delete all related posts', function () {
         '*/users/1/posts/1' => Http::response(body: fixture('Posts/destroy')),
         '*/users/1/posts' => Http::sequence()
             ->push(body: fixture('Posts/index'))
-            ->push(body: fixture('Posts/empty'))
+            ->push(body: fixture('Posts/empty')),
     ]);
 
     $user = User::find(1);
@@ -104,7 +104,7 @@ it('can send a multipart request with file', function () {
         'name' => 'file',
         'contents' => 'yellow banana',
         'filename' => null,
-        'headers' => []
+        'headers' => [],
     ]);
 
     Http::assertSent(

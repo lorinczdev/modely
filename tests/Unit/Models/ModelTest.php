@@ -24,7 +24,7 @@ it('can get config', function () {
     $config = $user->getConfig();
 
     expect($config)->toBeArray()
-        ->and($config)->toBe(require __DIR__ . '/../../Mocks/Integration/config.php');
+        ->and($config)->toBe(require __DIR__.'/../../Mocks/Integration/config.php');
 });
 
 it('can get new instance of builder', function () {
@@ -42,8 +42,8 @@ it('it maps properties with relation model when property name and defined relati
     $user = new User([
         'id' => 1,
         'posts' => [
-            ['id' => 1, 'title' => 'Post A']
-        ]
+            ['id' => 1, 'title' => 'Post A'],
+        ],
     ]);
 
     expect($user->posts)
@@ -92,5 +92,4 @@ it('when registered it prepares models', function () {
 });
 
 it('forwards calls', function () {
-
 })->skip();

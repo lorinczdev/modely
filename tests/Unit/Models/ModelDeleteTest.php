@@ -1,6 +1,5 @@
 <?php
 
-
 use Lorinczdev\Modely\Tests\Mocks\Integration\Models\User;
 
 it('can be deleted', function () {
@@ -16,7 +15,7 @@ it('can be destroyed', function () {
     Http::fake([
         '*/users/1' => Http::sequence()
             ->push(body: fixture('Users/show'))
-            ->push(body: fixture('Users/destroy'))
+            ->push(body: fixture('Users/destroy')),
     ]);
 
     $count = User::destroy(1);

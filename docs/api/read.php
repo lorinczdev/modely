@@ -1,6 +1,5 @@
 <?php
 
-
 use Lorinczdev\Modely\Tests\Mocks\Integration\Models\User;
 
 User::get();

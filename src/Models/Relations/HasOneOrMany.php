@@ -3,9 +3,7 @@
 namespace Lorinczdev\Modely\Models\Relations;
 
 use Illuminate\Support\Collection;
-use Lorinczdev\Modely\Models\Builder;
 use Lorinczdev\Modely\Models\Model;
-use Str;
 
 abstract class HasOneOrMany extends Relation
 {

@@ -23,7 +23,6 @@ it('has hasMany relation', function () {
     expect($user->hasMany(Post::class))->toBeInstanceOf(HasMany::class);
 });
 
-
 class DummyUser extends User
 {
     public function hasMany(string $className, ?string $foreignKey = null, ?string $localKey = null): HasMany

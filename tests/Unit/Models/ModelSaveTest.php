@@ -167,7 +167,6 @@ it('can get first model or create a new one', function () {
 });
 
 it('can create or update a model', function () {
-
     Http::fake([
         '*/users?name=Marek&limit=1' => Http::sequence()
             ->push(body: fixture('Users/empty'))

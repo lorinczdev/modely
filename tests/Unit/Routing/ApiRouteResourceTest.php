@@ -52,7 +52,6 @@ it('can be compiled', function () {
         ApiRoute::getRoutesByIntegration('integration')
             ->where('reusableAction', false)
     )->toHaveCount(7);
-
 });
 
 class ApiRouteResource extends BaseApiRouteResource

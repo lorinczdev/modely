@@ -122,8 +122,7 @@ function hasRoute(
     string $uri,
     string $action,
     string $integration = 'integration'
-): bool
-{
+): bool {
     return ApiRoute::getRoutesByIntegration($integration)
         ->where('model', $model)
         ->where('method', $method)

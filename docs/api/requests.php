@@ -23,7 +23,6 @@ $request->send('update', ['name' => 'Keram']);
 // 'Post' is the method name
 // and Request indicates that the files is the extenstion of the Request
 
-
 // Other ideas:
 
 // UpdateUsers
@@ -43,7 +42,6 @@ $request->send('update', ['name' => 'Keram']);
 // IndexUser
 // ShowUser
 // StoreUser
-
 
 // Preferred way to register custom requests:
 

@@ -3,7 +3,6 @@
 use Illuminate\Support\Collection;
 use Lorinczdev\Modely\Tests\Mocks\Integration\Models\User;
 
-
 it('reads collection of models', function () {
     Http::fake(['*/users' => Http::response(body: fixture('Users/index'))]);
 
@@ -124,7 +123,6 @@ it('can get fresh model', function () {
 
     expect($user->name)->toBe('Marek');
 });
-
 
 it('can refresh the model', function () {
     Http::fake(['*/users/1' => Http::response(body: fixture('Users/show'))]);

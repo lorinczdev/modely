@@ -11,10 +11,10 @@ class UnknownRouteException extends Exception
         $methodString = '';
 
         if ($method) {
-            $methodString = "(" . strtoupper($method) . ")";
+            $methodString = '('.strtoupper($method).')';
         }
 
-        $message = "Route for action " . $methodString . "$action on model [{$modelClass}] was not registered.";
+        $message = 'Route for action '.$methodString."$action on model [{$modelClass}] was not registered.";
 
         parent::__construct($message);
     }

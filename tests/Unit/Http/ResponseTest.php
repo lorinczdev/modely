@@ -17,7 +17,6 @@ it('can get data', function () {
     expect($response->data())->toBe(['id' => 1]);
 });
 
-
 it('can check if content type is json', function () {
     $response = new Lorinczdev\Modely\Http\ApiResponse(
         new \Illuminate\Http\Client\Response(

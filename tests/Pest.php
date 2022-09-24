@@ -7,7 +7,7 @@ uses(TestCase::class)->in(__DIR__);
 function fixture(string $name): array
 {
     $file = file_get_contents(
-        filename: __DIR__ . "/Fixtures/$name.json",
+        filename: __DIR__."/Fixtures/$name.json",
     );
 
     if (! $file) {
@@ -15,7 +15,6 @@ function fixture(string $name): array
             message: "Cannot find fixture: [$name] at tests/Fixtures/$name.json",
         );
     }
-
 
     return json_decode($file, true, 512, JSON_THROW_ON_ERROR);
 }

@@ -41,8 +41,7 @@ class ApiRouteResource
     public function __construct(
         protected string $uri,
         protected string $model
-    )
-    {
+    ) {
         //
     }
 
@@ -84,7 +83,7 @@ class ApiRouteResource
 
             $method = strtolower($action['method']);
 
-            \Lorinczdev\Modely\Facades\ApiRoute::{$method}($this->resolveUri($this->uri . $action['uri']), [$this->model, $actionName]);
+            \Lorinczdev\Modely\Facades\ApiRoute::{$method}($this->resolveUri($this->uri.$action['uri']), [$this->model, $actionName]);
         }
     }
 
@@ -112,7 +111,7 @@ class ApiRouteResource
 
     protected function resolveUri(string $uri): string
     {
-        return Str::replace('{model}', '{' . (new $this->model)->getKeyName() . '}', $uri);
+        return Str::replace('{model}', '{'.(new $this->model)->getKeyName().'}', $uri);
     }
 
     public function loadGroups(Collection $routes): void

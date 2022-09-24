@@ -8,7 +8,6 @@ use RuntimeException;
 
 class IntegrationUrlQuery extends UrlQuery
 {
-
     public function compileQuery(Query $query): string
     {
         $this->compiledData = $this->compile($query);
@@ -22,12 +21,11 @@ class IntegrationUrlQuery extends UrlQuery
         ?string $type = null,
         ?string $column = null,
         ?string $operator = null,
-        mixed   $value = null,
-        mixed   $values = null,
+        mixed $value = null,
+        mixed $values = null,
         ?string $boolean = null,
-        ?Query  $query = null,
-    ): array
-    {
+        ?Query $query = null,
+    ): array {
         if ($type === 'In') {
             $set = [];
 
@@ -46,7 +44,7 @@ class IntegrationUrlQuery extends UrlQuery
             return [$column => $value];
         }
 
-        throw new RuntimeException('Unhandled type: ' . $type);
+        throw new RuntimeException('Unhandled type: '.$type);
     }
 
     public function compile(Query $query): array
@@ -56,7 +54,7 @@ class IntegrationUrlQuery extends UrlQuery
         foreach ($query->wheres as $value) {
             $compiledData = [
                 ...$compiledData,
-                ...$this->compileWhere(...$value)
+                ...$this->compileWhere(...$value),
             ];
         }
 

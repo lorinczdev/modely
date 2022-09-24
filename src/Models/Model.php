@@ -20,10 +20,10 @@ use Lorinczdev\Modely\Http\ApiClient;
 use Lorinczdev\Modely\Http\ApiRequest;
 use Lorinczdev\Modely\Models\Concerns\HasRelationships;
 use Lorinczdev\Modely\Models\Concerns\HasTimestamps;
-use Lorinczdev\Modely\Routing\UnknownRouteException;
 
 /**
  * @mixin Builder
+ *
  * @method static static first()
  */
 abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializable
@@ -42,16 +42,19 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
      * @var string|null
      */
     protected const CREATED_AT = 'created_at';
+
     /**
      * The name of the "updated at" column.
      *
      * @var string|null
      */
     protected const UPDATED_AT = 'updated_at';
+
     /**
      * @var array Project configuration.
      */
     protected array $config;
+
     /**
      * Indicates if the model exists.
      */
@@ -61,19 +64,24 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
      * Indicates if the model was inserted during the current request lifecycle.
      */
     public bool $wasRecentlyCreated = false;
+
     protected bool $incrementing = true;
+
     /**
      * The primary key for the model.
      */
     protected string $primaryKey = 'id';
+
     /**
      * The "type" of the primary key ID.
      */
     protected string $keyType = 'int';
+
     /**
      * Indicates that the object's string representation should be escaped when __toString is invoked.
      */
     protected bool $escapeWhenCastingToString = false;
+
     protected array $passthru = [
         'get',
         'hydrate',
@@ -91,7 +99,7 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
         'whereIn',
         'firstOrCreate',
         'firstOrFail',
-        'paginate'
+        'paginate',
     ];
 
     final public function __construct(?array $data = [])
@@ -249,8 +257,8 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
     /**
      * Handle dynamic static method calls into the model.
      *
-     * @param string $method
-     * @param array  $parameters
+     * @param  string  $method
+     * @param  array  $parameters
      * @return mixed
      */
     public static function __callStatic(string $method, array $parameters)
@@ -467,7 +475,7 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
     }
 
     /**
-     * @param array $models
+     * @param  array  $models
      * @return Collection<int, static>
      */
     public function newCollection(array $models = []): Collection
@@ -562,7 +570,7 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
     /**
      * Dynamically retrieve attributes on the model.
      *
-     * @param string $key
+     * @param  string  $key
      * @return mixed
      */
     public function __get(string $key)
@@ -573,8 +581,8 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
     /**
      * Dynamically set attributes on the model.
      *
-     * @param string $key
-     * @param mixed  $value
+     * @param  string  $key
+     * @param  mixed  $value
      * @return void
      */
     public function __set(string $key, mixed $value)
@@ -585,7 +593,7 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
     /**
      * Get the value for a given offset.
      *
-     * @param mixed $offset
+     * @param  mixed  $offset
      * @return mixed
      */
     public function offsetGet(mixed $offset): mixed
@@ -596,8 +604,8 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
     /**
      * Set the value for a given offset.
      *
-     * @param mixed $offset
-     * @param mixed $value
+     * @param  mixed  $offset
+     * @param  mixed  $value
      * @return void
      */
     public function offsetSet(mixed $offset, mixed $value): void
@@ -608,7 +616,7 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
     /**
      * Determine if an attribute or relation exists on the model.
      *
-     * @param string $key
+     * @param  string  $key
      * @return bool
      */
     public function __isset(string $key)
@@ -619,7 +627,7 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
     /**
      * Determine if the given attribute exists.
      *
-     * @param mixed $offset
+     * @param  mixed  $offset
      * @return bool
      */
     public function offsetExists(mixed $offset): bool
@@ -630,7 +638,7 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
     /**
      * Unset an attribute on the model.
      *
-     * @param string $key
+     * @param  string  $key
      * @return void
      */
     public function __unset(string $key)
@@ -641,7 +649,7 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
     /**
      * Unset the value for a given offset.
      *
-     * @param mixed $offset
+     * @param  mixed  $offset
      * @return void
      */
     public function offsetUnset(mixed $offset): void

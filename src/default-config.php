@@ -22,10 +22,10 @@ return [
     'response' => \Lorinczdev\Modely\Http\ApiResponse::class,
 
     // Path to routes file where API endpoints are registered.
-    'routes' => __DIR__ . '/routes.php',
+    'routes' => __DIR__.'/routes.php',
 
     'dir' => [
         // Directory where models are stored.
-        'models' => __DIR__ . '/Models',
-    ]
+        'models' => __DIR__.'/Models',
+    ],
 ];

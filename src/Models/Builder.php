@@ -38,8 +38,7 @@ class Builder
 
     public function __construct(
         protected Model $model,
-    )
-    {
+    ) {
         $this->query = new Query($model);
     }
 
@@ -189,7 +188,7 @@ class Builder
      */
     public function whereNot(string|array|Closure $column, mixed $operator = null, mixed $value = null, $boolean = 'and')
     {
-        return $this->where($column, $operator, $value, $boolean . ' not');
+        return $this->where($column, $operator, $value, $boolean.' not');
     }
 
     /**
@@ -303,9 +302,9 @@ class Builder
      * Add a basic where clause to the query.
      */
     public function where(string|array|Closure $column,
-                          mixed                $operator = null,
-                          mixed                $value = null,
-                          string               $boolean = 'and'): self
+                          mixed $operator = null,
+                          mixed $value = null,
+                          string $boolean = 'and'): self
     {
         // if ($column instanceof Closure && is_null($operator)) {
         //     $column($query = $this->model->newQuery());
@@ -431,7 +430,7 @@ class Builder
     /**
      * Call the given local model scopes.
      *
-     * @param array|string $scopes
+     * @param  array|string  $scopes
      * @return static|mixed
      */
     // public function scopes($scopes)
@@ -470,8 +469,8 @@ class Builder
     /**
      * Apply the given scope on the current builder instance.
      *
-     * @param callable $scope
-     * @param array    $parameters
+     * @param  callable  $scope
+     * @param  array  $parameters
      * @return mixed
      */
     // protected function callScope(callable $scope, array $parameters = [])

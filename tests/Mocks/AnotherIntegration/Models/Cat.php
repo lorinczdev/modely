@@ -6,5 +6,4 @@ use Lorinczdev\Modely\Models\Model;
 
 class Cat extends Model
 {
-
 }

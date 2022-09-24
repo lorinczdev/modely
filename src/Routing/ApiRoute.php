@@ -13,13 +13,11 @@ class ApiRoute
     protected ApiRouter $router;
 
     public function __construct(
-        public string  $method,
-        public string  $uri,
-        public string  $action,
+        public string $method,
+        public string $uri,
+        public string $action,
         public ?string $model = null,
-    )
-    {
-
+    ) {
     }
 
     public function partOf(string $name): self

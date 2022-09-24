@@ -3,7 +3,7 @@
 use Lorinczdev\Modely\Models\UrlQuery\CompileAsArrayQuery;
 
 beforeEach(function () {
-    $this->config = require __DIR__ . '/../../src/default-config.php';
+    $this->config = require __DIR__.'/../../src/default-config.php';
 });
 
 it('is stored in a array format', function () {

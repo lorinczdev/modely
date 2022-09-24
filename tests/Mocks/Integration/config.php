@@ -16,9 +16,9 @@ return [
 
     'response' => \Lorinczdev\Modely\Tests\Mocks\Integration\ApiResponse::class,
 
-    'routes' => __DIR__ . '/routes.php',
+    'routes' => __DIR__.'/routes.php',
 
     'dir' => [
-        'models' => __DIR__ . '/Models',
-    ]
+        'models' => __DIR__.'/Models',
+    ],
 ];

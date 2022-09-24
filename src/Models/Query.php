@@ -169,10 +169,9 @@ class Query
      */
     public function orWhere(
         string|array|Closure $column,
-        mixed                $operator = null,
-        mixed                $value = null
-    ): self
-    {
+        mixed $operator = null,
+        mixed $value = null
+    ): self {
         [$value, $operator] = $this->prepareValueAndOperator(
             $value, $operator, func_num_args() === 2
         );
@@ -214,11 +213,10 @@ class Query
      */
     public function where(
         string|array|Closure $column,
-        mixed                $operator = null,
-        mixed                $value = null,
-        string               $boolean = 'and'
-    ): self
-    {
+        mixed $operator = null,
+        mixed $value = null,
+        string $boolean = 'and'
+    ): self {
         // If the column is an array, we will assume it is an array of key-value pairs
         // and can add them each as a where clause. We will maintain the boolean we
         // received when the method was called and pass it into the nested where.
@@ -380,17 +378,16 @@ class Query
     /**
      * Add an "or where not" clause to the query.
      *
-     * @param Closure|string|array $column
-     * @param mixed                $operator
-     * @param mixed                $value
+     * @param  Closure|string|array  $column
+     * @param  mixed  $operator
+     * @param  mixed  $value
      * @return $this
      */
     public function orWhereNot(
         string|array|Closure $column,
-        mixed                $operator = null,
-        mixed                $value = null
-    ): self
-    {
+        mixed $operator = null,
+        mixed $value = null
+    ): self {
         return $this->whereNot($column, $operator, $value, 'or');
     }
 
@@ -399,12 +396,11 @@ class Query
      */
     public function whereNot(
         string|array|Closure $column,
-        mixed                $operator = null,
-        mixed                $value = null,
-        string               $boolean = 'and'
-    ): self
-    {
-        return $this->where($column, $operator, $value, $boolean . ' not');
+        mixed $operator = null,
+        mixed $value = null,
+        string $boolean = 'and'
+    ): self {
+        return $this->where($column, $operator, $value, $boolean.' not');
     }
 
     /**
@@ -460,7 +456,6 @@ class Query
     public function whereIn(string $column, mixed $values, string $boolean = 'and', bool $not = false): self
     {
         $type = $not ? 'NotIn' : 'In';
-
 
         // Next, if the value is Arrayable we need to cast it to its raw array form so we
         // have the underlying array value instead of an Arrayable object which is not
@@ -883,7 +878,7 @@ class Query
     /**
      * Add a "group by" clause to the query.
      *
-     * @param array|string ...$groups
+     * @param  array|string  ...$groups
      * @return $this
      */
     public function groupBy(...$groups): self

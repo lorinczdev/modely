@@ -20,6 +20,6 @@ abstract class UrlQuery implements Stringable
             return '';
         }
 
-        return $queryString . http_build_query($this->compiledData);
+        return $queryString.http_build_query($this->compiledData);
     }
 }

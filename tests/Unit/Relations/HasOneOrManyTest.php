@@ -12,7 +12,7 @@ it('can get models');
 
 it('can get first model', function () {
     Http::fake([
-        '*/users/1/posts?limit=1' => Http::response(body: fixture('Posts/index'))
+        '*/users/1/posts?limit=1' => Http::response(body: fixture('Posts/index')),
     ]);
 
     $user = new User(['id' => 1]);
@@ -26,7 +26,7 @@ it('can transform array of items to models', function () {
     $user = new User(['id' => 1]);
 
     $posts = $user->posts()->fill([
-        ['id' => 1, 'title' => 'Post A']
+        ['id' => 1, 'title' => 'Post A'],
     ]);
 
     expect($posts)->toBeInstanceOf(Collection::class);
@@ -34,7 +34,7 @@ it('can transform array of items to models', function () {
 
 it('has where clause', function () {
     Http::fake([
-        '*/users/1/posts?title=Post+A' => Http::response(body: fixture('Posts/index'))
+        '*/users/1/posts?title=Post+A' => Http::response(body: fixture('Posts/index')),
     ]);
 
     $user = new User(['id' => 1]);
