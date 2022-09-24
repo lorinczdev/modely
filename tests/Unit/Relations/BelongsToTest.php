@@ -18,3 +18,18 @@ it('works', function () {
 
     expect($post->category()->first())->toBeInstanceOf(Category::class);
 });
+
+it('returns null when raw value is null', function () {
+    Http::fake([
+        '*/users?limit=1' => Http::sequence()
+            ->push(body: fixture('Users/index')),
+        '*/users/1/posts?limit=1' => Http::sequence()
+            ->push(body: fixture('Posts/index')),
+        '*/categories?limit=1' => Http::sequence()
+            ->push(body: fixture('Posts/empty')),
+    ]);
+
+    $post = User::first()->posts()->first();
+
+    expect($post->category()->first())->toBe(null);
+});

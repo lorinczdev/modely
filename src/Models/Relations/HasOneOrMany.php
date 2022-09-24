@@ -39,7 +39,7 @@ abstract class HasOneOrMany extends Relation
     /**
      * Transform provided data to Models.
      */
-    public function fill(Model|array|Collection|null $data): Model|Collection
+    public function fill(Model|array|Collection|null $data): Model|Collection|null
     {
         // Transform many models
         if ($this->isHasMany()) {
