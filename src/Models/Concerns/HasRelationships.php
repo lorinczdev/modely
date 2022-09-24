@@ -2,6 +2,7 @@
 
 namespace Lorinczdev\Modely\Models\Concerns;
 
+use Lorinczdev\Modely\Models\Relations\BelongsTo;
 use Lorinczdev\Modely\Models\Relations\HasMany;
 use Lorinczdev\Modely\Models\Relations\HasOne;
 use Str;
@@ -36,8 +37,13 @@ trait HasRelationships
         return method_exists($this, $relationship);
     }
 
+    public function getForeignKey(): string
+    {
+        return Str::snake(class_basename($this)) . '_' . $this->getKeyName();
+    }
+
     /**
-     * Create has many relationship.
+     * Define a one-to-many relationship.
      *
      * @param class-string<static> $className
      * @param string|null          $foreignKey
@@ -53,13 +59,8 @@ trait HasRelationships
         return new HasMany($className, $this, $foreignKey, $localKey);
     }
 
-    public function getForeignKey(): string
-    {
-        return Str::snake(class_basename($this)) . '_' . $this->getKeyName();
-    }
-
     /**
-     * Create has one relationship.
+     * Define a one-to-one relationship.
      *
      * @param class-string<static> $className
      * @param string|null          $foreignKey
@@ -73,5 +74,24 @@ trait HasRelationships
         $localKey = $localKey ?: $this->getKeyName();
 
         return new HasOne($className, $this, $foreignKey, $localKey);
+    }
+
+    /**
+     * Define an inverse one-to-one or many relationship.
+     *
+     * @param class-string<static> $className
+     * @param string|null          $foreignKey
+     * @param string|null          $localKey
+     * @return BelongsTo
+     */
+    protected function belongsTo(string $className, ?string $foreignKey = null, ?string $localKey = null): BelongsTo
+    {
+        $instance = new $className();
+
+        $foreignKey = $foreignKey ?: $instance->getForeignKey();
+
+        $localKey = $localKey ?: $this->getKeyName();
+
+        return new BelongsTo($className, $this, $foreignKey, $localKey);
     }
 }
