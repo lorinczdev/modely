@@ -236,9 +236,9 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
             return;
         }
 
-        // if ($this->fireModelEvent('deleting') === false) {
-        //     return false;
-        // }
+        if ($this->fireModelEvent('deleting') === false) {
+            return false;
+        }
 
         $this->newQuery()->delete();
 
@@ -249,7 +249,7 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
         // Once the model has been deleted, we will fire off the deleted event so that
         // the developers may hook into post-delete operations. We will then return
         // a boolean true as the delete is presumably successful on the database.
-        // $this->fireModelEvent('deleted', false);
+        $this->fireModelEvent('deleted', false);
 
         return true;
     }
@@ -283,7 +283,7 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
 
         $model->fill($attributes, true);
 
-        // $model->fireModelEvent('retrieved', false);
+        $model->fireModelEvent('retrieved', false);
 
         return $model;
     }
@@ -351,9 +351,9 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
         // If the "saving" event returns false we'll bail out of the save and return
         // false, indicating that the save failed. This provides a chance for any
         // listeners to cancel save operations if validations fail or whatever.
-        // if ($this->fireModelEvent('saving') === false) {
-        //     return false;
-        // }
+        if ($this->fireModelEvent('saving') === false) {
+            return false;
+        }
 
         if ($this->exists) {
             $saved = ! $this->isDirty() || $this->performUpdate($query);
@@ -379,9 +379,9 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
         // If the updating event returns false, we will cancel the update operation so
         // developers can hook Validation systems into their models and cancel this
         // operation if the model does not pass validation. Otherwise, we update.
-        // if ($this->fireModelEvent('updating') === false) {
-        //     return false;
-        // }
+        if ($this->fireModelEvent('updating') === false) {
+            return false;
+        }
 
         // Once we have run the update operation, we will fire the "updated" event for
         // this model instance. This will allow developers to hook into these after
@@ -393,7 +393,7 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
 
             $this->syncChanges();
 
-            // $this->fireModelEvent('updated', false);
+            $this->fireModelEvent('updated', false);
         }
 
         return true;
@@ -416,9 +416,9 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
      */
     protected function performInsert(Builder $query): bool
     {
-        // if ($this->fireModelEvent('creating') === false) {
-        //     return false;
-        // }
+        if ($this->fireModelEvent('creating') === false) {
+            return false;
+        }
 
         $attributes = $this->getAttributesForInsert();
 
@@ -432,7 +432,7 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
 
         $this->wasRecentlyCreated = true;
 
-        // $this->fireModelEvent('created', false);
+        $this->fireModelEvent('created', false);
 
         return true;
     }
@@ -442,7 +442,7 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
      */
     protected function finishSave(): void
     {
-        // $this->fireModelEvent('saved', false);
+        $this->fireModelEvent('saved', false);
 
         $this->exists = true;
 
