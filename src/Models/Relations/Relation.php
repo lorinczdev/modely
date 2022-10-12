@@ -89,7 +89,7 @@ abstract class Relation
     /**
      * Return query instance base on relation model class.
      */
-    protected function query(?array $query = []): Builder
+    public function query(?array $query = []): Builder
     {
         // Initiate relation model
         /** @var Model $model */
