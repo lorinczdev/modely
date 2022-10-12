@@ -18,6 +18,7 @@ use JsonSerializable;
 use LogicException;
 use Lorinczdev\Modely\Http\ApiClient;
 use Lorinczdev\Modely\Http\ApiRequest;
+use Lorinczdev\Modely\Models\Concerns\HasParameters;
 use Lorinczdev\Modely\Models\Concerns\HasRelationships;
 use Lorinczdev\Modely\Models\Concerns\HasTimestamps;
 
@@ -35,6 +36,7 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
     use ForwardsCalls;
     use HasEvents;
     use HidesAttributes;
+    use HasParameters;
 
     /**
      * The name of the "created at" column.

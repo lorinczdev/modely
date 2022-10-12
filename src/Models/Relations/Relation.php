@@ -21,6 +21,7 @@ abstract class Relation
         public string $foreignKey,
         public string $localKey
     ) {
+
     }
 
     /**
