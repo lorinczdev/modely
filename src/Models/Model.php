@@ -104,6 +104,34 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
         'paginate',
     ];
 
+    /**
+     * Indicates whether lazy loading will be prevented on this model.
+     *
+     * @var bool
+     */
+    public $preventsLazyLoading = false;
+
+    /**
+     * Indicates whether lazy loading should be restricted on all models.
+     *
+     * @var bool
+     */
+    protected static bool $modelsShouldPreventLazyLoading = false;
+
+    /**
+     * Indicates if an exception should be thrown instead of silently discarding non-fillable attributes.
+     *
+     * @var bool
+     */
+    protected static bool $modelsShouldPreventSilentlyDiscardingAttributes = false;
+
+    /**
+     * Indicates if an exception should be thrown when trying to access a missing attribute on a retrieved model.
+     *
+     * @var bool
+     */
+    protected static bool $modelsShouldPreventAccessingMissingAttributes = false;
+
     final public function __construct(?array $data = [])
     {
         $this->syncOriginal();
@@ -487,6 +515,7 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
 
     public function loadMissing(string $string): void
     {
+        // TODO
     }
 
     /**
@@ -567,6 +596,36 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
 
         // exception
         throw new BadMethodCallException(sprintf('Call to undefined method %s::%s()', $this::class, $method));
+    }
+
+    /**
+     * Determine if lazy loading is disabled.
+     *
+     * @return bool
+     */
+    public static function preventsLazyLoading()
+    {
+        return static::$modelsShouldPreventLazyLoading;
+    }
+
+    /**
+     * Determine if discarding guarded attribute fills is disabled.
+     *
+     * @return bool
+     */
+    public static function preventsSilentlyDiscardingAttributes()
+    {
+        return static::$modelsShouldPreventSilentlyDiscardingAttributes;
+    }
+
+    /**
+     * Determine if accessing missing attributes is disabled.
+     *
+     * @return bool
+     */
+    public static function preventsAccessingMissingAttributes()
+    {
+        return static::$modelsShouldPreventAccessingMissingAttributes;
     }
 
     /**
