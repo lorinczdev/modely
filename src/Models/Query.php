@@ -506,7 +506,7 @@ class Query
      */
     public function whereBetween(string $column, iterable $values, string $boolean = 'and', bool $not = false): self
     {
-        $type = 'between';
+        $type = 'Between';
 
         if ($values instanceof CarbonPeriod) {
             $values = $values->toArray();
