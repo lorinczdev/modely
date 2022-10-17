@@ -68,7 +68,7 @@ class Query
 
     protected ApiRequest $request;
 
-    public static bool $ignoreMissingOperatos = false;
+    public static bool $ignoreMissingOperators = false;
 
     public function __construct(protected Model $model)
     {
@@ -211,7 +211,7 @@ class Query
             return true;
         }
 
-        if (self::$ignoreMissingOperatos) {
+        if (self::$ignoreMissingOperators) {
             return false;
         }
 
