@@ -63,6 +63,7 @@ class Query
         'rlike', 'not rlike', 'regexp', 'not regexp',
         '~', '~*', '!~', '!~*', 'similar to',
         'not similar to', 'not ilike', '~~*', '!~~*',
+        'null' // used to ignore the operator
     ];
 
     protected ApiRequest $request;
