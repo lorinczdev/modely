@@ -79,6 +79,10 @@ class ApiRequest
             ...$this->query->getModel()->getParameters(),
             ...$this->parameters,
         ] as $key => $value) {
+            if (!$value) {
+                continue;
+            }
+
             $url = Str::replace('{'.$key.'}', $value, $url);
         }
 
