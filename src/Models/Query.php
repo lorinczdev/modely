@@ -215,8 +215,7 @@ class Query
             return false;
         }
 
-        return in_array($operator, $this->operators) &&
-            ! in_array($operator, ['=', '<>', '!=']);
+        return !in_array($operator, $this->operators);
     }
 
     /**
