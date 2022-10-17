@@ -67,6 +67,8 @@ class Query
 
     protected ApiRequest $request;
 
+    public static bool $ignoreMissingOperatos = false;
+
     public function __construct(protected Model $model)
     {
         $this->request = $this->resolveRequest();
@@ -204,7 +206,15 @@ class Query
      */
     protected function invalidOperatorAndValue(string $operator, mixed $value): bool
     {
-        return is_null($value) && in_array($operator, $this->operators) &&
+        if (is_null($value)) {
+            return true;
+        }
+
+        if (self::$ignoreMissingOperatos) {
+            return false;
+        }
+
+        return in_array($operator, $this->operators) &&
             ! in_array($operator, ['=', '<>', '!=']);
     }
 
