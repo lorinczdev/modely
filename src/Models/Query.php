@@ -367,10 +367,6 @@ class Query
      */
     protected function invalidOperator(mixed $operator): bool
     {
-        if (self::$ignoreMissingOperatos) {
-            return false;
-        }
-
         return ! is_string($operator) || (! in_array(strtolower($operator), $this->operators, true) &&
                 ! in_array(strtolower($operator), $this->grammar->getOperators(), true));
     }
