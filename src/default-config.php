@@ -13,6 +13,9 @@ return [
     'query' => [
         // Compiler used to compile query.
         'compiler' => CompileAsArrayQuery::class,
+
+        // Default per page.
+        'perPage' => 15,
     ],
 
     // Request used by integration to prepare HTTP request.

@@ -544,8 +544,10 @@ class Builder
         return $this;
     }
 
-    public function paginate(int $perPage = 15, int $page = 1, string $method = 'index'): Pagination
+    public function paginate(int $perPage = null, int $page = 1, string $method = 'index'): Pagination
     {
+        $perPage = $perPage ?: $this->model->getConfig()['query']['perPage'] ?? 15;
+
         return new Pagination($this, $perPage, $page, $method);
     }
 }
