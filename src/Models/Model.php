@@ -599,6 +599,14 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
     }
 
     /**
+     * Get the format for database stored dates.
+     */
+    public function getDateFormat(): string
+    {
+        return $this->dateFormat ?: 'Y-m-d H:i:s';
+    }
+
+    /**
      * Determine if lazy loading is disabled.
      *
      * @return bool
