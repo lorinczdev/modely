@@ -8,6 +8,7 @@ use Illuminate\Support\Str;
 
 class ApiResponse implements Arrayable, ArrayAccess
 {
+    // probably should be an array otherwire ArrayAccess won't make sense
     protected mixed $data = null;
 
     public function __construct(protected \Illuminate\Http\Client\Response $response)
@@ -57,7 +58,7 @@ class ApiResponse implements Arrayable, ArrayAccess
         return $this->data();
     }
 
-    public function data(): ?array
+    public function data(): mixed
     {
         return $this->data;
     }
