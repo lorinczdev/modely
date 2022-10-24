@@ -8,7 +8,7 @@ use Illuminate\Support\Str;
 
 class ApiResponse implements Arrayable, ArrayAccess
 {
-    protected ?array $data = null;
+    protected mixed $data = null;
 
     public function __construct(protected \Illuminate\Http\Client\Response $response)
     {
