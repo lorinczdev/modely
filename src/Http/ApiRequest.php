@@ -2,6 +2,7 @@
 
 namespace Lorinczdev\Modely\Http;
 
+use Illuminate\Http\File;
 use Illuminate\Support\Str;
 use Lorinczdev\Modely\Models\Query;
 use Lorinczdev\Modely\Routing\ApiRoute;
@@ -25,7 +26,7 @@ class ApiRequest
         string $action,
         array $data = [],
         string $method = null
-    ): ApiResponse {
+    ): ApiResponse|File {
         $client = $this->getClient();
 
         $route = $this->getRoute($action, $method);
@@ -35,6 +36,7 @@ class ApiRequest
         match ($route->contentType) {
             'form' => $client->asForm(),
             'multipart' => $client->asMultipart(),
+            'download' => $client->asDownload(),
             default => '',
         };
 

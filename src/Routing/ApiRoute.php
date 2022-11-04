@@ -41,6 +41,13 @@ class ApiRoute
         return $this;
     }
 
+    public function asDownload(): self
+    {
+        $this->contentType = 'download';
+
+        return $this;
+    }
+
     public function asAction(): self
     {
         $this->reusableAction = true;

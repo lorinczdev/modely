@@ -112,6 +112,16 @@ it('can send a multipart request with file', function () {
     );
 });
 
+it('can send request to download a file', function () {
+    Http::fake();
+
+    $user = new User(['id' => 1]);
+
+    $response = $user->downloadAvatar();
+
+    expect($response->data())->toBeInstanceOf(\Illuminate\Http\File::class);
+});
+
 it('can send a form request', function () {
     Http::fake();
 

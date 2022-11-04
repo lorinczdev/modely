@@ -13,6 +13,7 @@ ApiRoute::put('users/{id}/promote', [User::class, 'promote']);
 
 ApiRoute::post('users/{id}/options', [User::class, 'options'])->asForm();
 ApiRoute::post('users/{id}/upload-avatar', [User::class, 'uploadAvatar'])->asMultipart();
+ApiRoute::post('users/{id}/download-avatar', [User::class, 'downloadAvatar'])->asDownload();
 
 ApiRoute::resource('users/{user_id}/posts', Post::class)
     ->only('index', 'store', 'destroy');

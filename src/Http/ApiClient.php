@@ -4,6 +4,7 @@ namespace Lorinczdev\Modely\Http;
 
 use Illuminate\Http\Client\PendingRequest;
 use Illuminate\Http\Client\Response;
+use Illuminate\Http\File;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 
@@ -21,22 +22,22 @@ abstract class ApiClient
 
     protected string $contentType = 'json';
 
-    public function get(string $url, array $payload = null): Response
+    public function get(string $url, array $payload = null): Response|File
     {
         return $this->sendAs('get', ...func_get_args());
     }
 
-    public function post(string $url, array $payload = null): Response
+    public function post(string $url, array $payload = null): Response|File
     {
         return $this->sendAs('post', ...func_get_args());
     }
 
-    public function put(string $url, array $payload = null): Response
+    public function put(string $url, array $payload = null): Response|File
     {
         return $this->sendAs('put', ...func_get_args());
     }
 
-    public function patch(string $url, array $payload = null): Response
+    public function patch(string $url, array $payload = null): Response|File
     {
         return $this->sendAs('patch', ...func_get_args());
     }
@@ -60,7 +61,14 @@ abstract class ApiClient
         return $this;
     }
 
-    protected function sendAs(string $method, string $url, array $payload = null): Response
+    public function asDownload(): self
+    {
+        $this->contentType = 'download';
+
+        return $this;
+    }
+
+    protected function sendAs(string $method, string $url, array $payload = null): Response|File
     {
         $this->setAction(...func_get_args());
 
@@ -74,7 +82,7 @@ abstract class ApiClient
         $this->payload = $payload;
     }
 
-    protected function send(): Response
+    protected function send(): Response|File
     {
         $client = $this->getHttpClient();
 
@@ -87,12 +95,24 @@ abstract class ApiClient
             $client->attach(...$this->multipartPayload);
         }
 
+        if ($this->contentType === 'download') {
+            $tempName = tempnam(sys_get_temp_dir(), 'response');
+            // $resource = \GuzzleHttp\Psr7\Utils::tryFopen($temp, 'w');
+            // $stream = \GuzzleHttp\Psr7\Utils::streamFor($resource);
+
+            $client->sink($tempName);
+        }
+
         $this->log($payload);
 
         $response = $client->{$this->method}(
             $this->url,
             $payload
         );
+
+        if ($this->contentType === 'download') {
+            return new File($tempName);
+        }
 
         return $this->handleResponse($response);
     }
@@ -121,6 +141,7 @@ abstract class ApiClient
             'json' => $client->asJson(),
             'form' => $client->asForm(),
             'multipart' => $client->asMultipart(),
+            'download' => '',
         };
 
         return $client

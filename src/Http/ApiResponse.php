@@ -4,6 +4,7 @@ namespace Lorinczdev\Modely\Http;
 
 use ArrayAccess;
 use Illuminate\Contracts\Support\Arrayable;
+use Illuminate\Http\File;
 use Illuminate\Support\Str;
 
 class ApiResponse implements Arrayable, ArrayAccess
@@ -11,15 +12,20 @@ class ApiResponse implements Arrayable, ArrayAccess
     // probably should be an array otherwire ArrayAccess won't make sense
     protected mixed $data = null;
 
-    public function __construct(protected \Illuminate\Http\Client\Response $response)
+    public function __construct(protected \Illuminate\Http\Client\Response|File $response)
     {
         $this->log();
 
         $this->handleResponse($response);
     }
 
-    protected function handleResponse(\Illuminate\Http\Client\Response $response): void
+    protected function handleResponse(\Illuminate\Http\Client\Response|File $response): void
     {
+        if ($response instanceof File) {
+            $this->data = $response;
+            return;
+        }
+
         if ($this->isJson()) {
             $data = $response->json();
         } else {
@@ -33,13 +39,21 @@ class ApiResponse implements Arrayable, ArrayAccess
 
     protected function log(): void
     {
-        ray(
-            [
-                'status' => $this->response->failed() ? 'Failure' : 'Success',
-                'contents' => $this->response->json(),
+        if ($this->response instanceof File) {
+            ray([
                 'response' => $this->response,
-            ]
-        )
+            ])
+                ->label('Modely')
+                ->color('green');
+
+            return;
+        }
+
+        ray([
+            'status' => $this->response->failed() ? 'Failure' : 'Success',
+            'contents' => $this->response->json(),
+            'response' => $this->response,
+        ])
             ->label('Modely')
             ->color($this->response->failed() ? 'red' : 'green');
 
