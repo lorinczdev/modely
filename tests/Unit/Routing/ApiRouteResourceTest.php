@@ -28,6 +28,8 @@ it('can exclude actions', function () {
     $routeResource = (new ApiRouteResource('/user', User::class))->except('index');
 
     expect($routeResource->options['except'])->toEqual(['index']);
+
+    expect($routeResource->getActions())->not->toContain('index');
 });
 
 it('can add additional actions', function () {

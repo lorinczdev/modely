@@ -140,12 +140,12 @@ class ApiRouteResource
     {
         $actions = $this->actions;
 
-        if (isset($options['only'])) {
-            $actions = array_intersect($actions, (array) $options['only']);
+        if (isset($this->options['only'])) {
+            $actions = array_intersect($actions, (array) $this->options['only']);
         }
 
-        if (isset($options['except'])) {
-            $actions = array_diff($actions, (array) $options['except']);
+        if (isset($this->options['except'])) {
+            $actions = array_diff($actions, (array) $this->options['except']);
         }
 
         return $actions;
