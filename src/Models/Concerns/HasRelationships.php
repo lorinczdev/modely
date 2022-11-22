@@ -34,6 +34,26 @@ trait HasRelationships
     }
 
     /**
+     * Set the given relationship on the model.
+     */
+    public function setRelation(string $relation, mixed $value): static
+    {
+        $this->relations[$relation] = $value;
+
+        return $this;
+    }
+
+    /**
+     * Unset a loaded relationship.
+     */
+    public function unsetRelation(string $relation): static
+    {
+        unset($this->relations[$relation]);
+
+        return $this;
+    }
+    
+    /**
      * Check if model has registered provided relationship.
      *
      * @param  string  $relationship
