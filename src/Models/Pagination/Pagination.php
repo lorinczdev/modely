@@ -30,9 +30,11 @@ class Pagination extends Collection
 
     protected function fetch(): array
     {
-        return $this->getArrayableItems(
-            $this->query->get()
-        );
+        $items = $this->query->get();
+
+        $this->emptyResponse = $items->isEmpty();
+
+        return $this->getArrayableItems($items);
     }
 
     public function previous(): static
