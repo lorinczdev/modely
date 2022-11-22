@@ -38,7 +38,8 @@ trait HasRelationships
      */
     public function setRelation(string $relation, mixed $value): static
     {
-        $this->relations[$relation] = $value;
+        // $this->relations[$relation] = $value;
+        $this->relations[$relation] = null; // use null keys for now
 
         return $this;
     }
