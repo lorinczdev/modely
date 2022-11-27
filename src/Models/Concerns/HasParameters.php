@@ -2,13 +2,6 @@
 
 namespace Lorinczdev\Modely\Models\Concerns;
 
-use Illuminate\Support\Collection;
-use Lorinczdev\Modely\Models\Model;
-use Lorinczdev\Modely\Models\Relations\BelongsTo;
-use Lorinczdev\Modely\Models\Relations\HasMany;
-use Lorinczdev\Modely\Models\Relations\HasOne;
-use Str;
-
 trait HasParameters
 {
     protected array $parameters = [];

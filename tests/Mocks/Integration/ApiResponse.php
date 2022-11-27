@@ -6,10 +6,11 @@ use Illuminate\Http\File;
 
 class ApiResponse extends \Lorinczdev\Modely\Http\ApiResponse
 {
-    protected function handleResponse(\Illuminate\Http\Client\Response|\Illuminate\Http\File $response): void
+    protected function handleResponse(\Illuminate\Http\Client\Response|File $response): void
     {
         if ($response instanceof File) {
             $this->data = $response;
+
             return;
         }
 

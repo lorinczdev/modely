@@ -5,7 +5,6 @@ namespace Lorinczdev\Modely\Tests\Unit\Relations;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Http;
 use Lorinczdev\Modely\Tests\Mocks\Integration\Models\Attachment;
-use Lorinczdev\Modely\Tests\Mocks\Integration\Models\Post;
 use Lorinczdev\Modely\Tests\Mocks\Integration\Models\User;
 
 it('has morph many relationships', function () {

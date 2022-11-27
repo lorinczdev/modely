@@ -23,6 +23,7 @@ class ApiResponse implements Arrayable, ArrayAccess
     {
         if ($response instanceof File) {
             $this->data = $response;
+
             return;
         }
 

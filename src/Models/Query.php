@@ -63,7 +63,7 @@ class Query
         'rlike', 'not rlike', 'regexp', 'not regexp',
         '~', '~*', '!~', '!~*', 'similar to',
         'not similar to', 'not ilike', '~~*', '!~~*',
-        'null' // used to ignore the operator
+        'null', // used to ignore the operator
     ];
 
     protected ApiRequest $request;
@@ -215,7 +215,7 @@ class Query
             return false;
         }
 
-        return !in_array($operator, $this->operators);
+        return ! in_array($operator, $this->operators);
     }
 
     /**

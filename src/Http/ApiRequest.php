@@ -80,7 +80,7 @@ class ApiRequest
             ...$this->query->getModel()->getParameters(),
             ...$this->parameters,
         ] as $key => $value) {
-            if (!$value) {
+            if (! $value) {
                 continue;
             }
 

@@ -142,6 +142,7 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
         foreach ($this->fillableFromArray($attributes) as $key => $value) {
             if ($this->isRelation($key) && $this->isRelationFillable($value)) {
                 $this->setRelation($key, $value);
+
                 continue;
             }
 

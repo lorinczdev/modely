@@ -3,7 +3,6 @@
 namespace Lorinczdev\Modely\Models\Concerns;
 
 use Illuminate\Support\Collection;
-use Lorinczdev\Modely\Models\Builder;
 use Lorinczdev\Modely\Models\Model;
 use Lorinczdev\Modely\Models\Relations\BelongsTo;
 use Lorinczdev\Modely\Models\Relations\HasMany;
@@ -54,7 +53,7 @@ trait HasRelationships
 
         return $this;
     }
-    
+
     /**
      * Check if model has registered provided relationship.
      *

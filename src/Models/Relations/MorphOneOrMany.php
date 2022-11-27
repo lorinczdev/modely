@@ -2,7 +2,6 @@
 
 namespace Lorinczdev\Modely\Models\Relations;
 
-use Lorinczdev\Modely\Models\Builder;
 use Lorinczdev\Modely\Models\Model;
 
 abstract class MorphOneOrMany extends HasOneOrMany
@@ -28,7 +27,6 @@ abstract class MorphOneOrMany extends HasOneOrMany
 
         parent::__construct($related, $parent, $id, $localKey);
     }
-
 
     /**
      * Get the plain morph type name without the table.
