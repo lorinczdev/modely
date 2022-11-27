@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Concerns\HidesAttributes;
 use Illuminate\Database\Eloquent\JsonEncodingException;
 use Illuminate\Database\Eloquent\MassAssignmentException;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
 use Illuminate\Support\Traits\ForwardsCalls;
 use JsonSerializable;
 use LogicException;
@@ -106,29 +107,21 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
 
     /**
      * Indicates whether lazy loading will be prevented on this model.
-     *
-     * @var bool
      */
-    public $preventsLazyLoading = false;
+    public bool $preventsLazyLoading = false;
 
     /**
      * Indicates whether lazy loading should be restricted on all models.
-     *
-     * @var bool
      */
     protected static bool $modelsShouldPreventLazyLoading = false;
 
     /**
      * Indicates if an exception should be thrown instead of silently discarding non-fillable attributes.
-     *
-     * @var bool
      */
     protected static bool $modelsShouldPreventSilentlyDiscardingAttributes = false;
 
     /**
      * Indicates if an exception should be thrown when trying to access a missing attribute on a retrieved model.
-     *
-     * @var bool
      */
     protected static bool $modelsShouldPreventAccessingMissingAttributes = false;
 
@@ -148,8 +141,8 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
 
         foreach ($this->fillableFromArray($attributes) as $key => $value) {
             if ($this->isRelation($key) && $this->isRelationFillable($value)) {
-                $value = $this->{$key}()->fill($value);
                 $this->setRelation($key, $value);
+                continue;
             }
 
             if ($this->isFillable($key)) {
@@ -612,7 +605,7 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
      *
      * @return bool
      */
-    public static function preventsLazyLoading()
+    public static function preventsLazyLoading(): bool
     {
         return static::$modelsShouldPreventLazyLoading;
     }
@@ -622,7 +615,7 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
      *
      * @return bool
      */
-    public static function preventsSilentlyDiscardingAttributes()
+    public static function preventsSilentlyDiscardingAttributes(): bool
     {
         return static::$modelsShouldPreventSilentlyDiscardingAttributes;
     }
@@ -632,7 +625,7 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
      *
      * @return bool
      */
-    public static function preventsAccessingMissingAttributes()
+    public static function preventsAccessingMissingAttributes(): bool
     {
         return static::$modelsShouldPreventAccessingMissingAttributes;
     }
@@ -765,5 +758,10 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
     public function toArray(): array
     {
         return array_merge($this->attributesToArray(), $this->relationsToArray());
+    }
+
+    public function getName(): string
+    {
+        return $this->name ?? Str::camel(class_basename($this::class));
     }
 }

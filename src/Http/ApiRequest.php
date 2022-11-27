@@ -77,7 +77,6 @@ class ApiRequest
 
         foreach ([
             $this->query->getModel()->getKeyName() => $this->query->getModel()->getKey(),
-            $this->query->getModel()->foreignKeyName => $this->query->getModel()->foreignKey,
             ...$this->query->getModel()->getParameters(),
             ...$this->parameters,
         ] as $key => $value) {

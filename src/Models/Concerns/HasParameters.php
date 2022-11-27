@@ -13,9 +13,21 @@ trait HasParameters
 {
     protected array $parameters = [];
 
+    protected array $relationParameters = [];
+
     public function getParameters(): array
     {
-        return $this->parameters;
+        return [
+            ...$this->parameters,
+            ...$this->relationParameters,
+        ];
+    }
+
+    public function setRelationParameters(array $parameters): static
+    {
+        $this->relationParameters = $parameters;
+
+        return $this;
     }
 
     public static function withParameters(array $parameters): self

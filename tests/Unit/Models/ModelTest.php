@@ -45,7 +45,7 @@ it('it maps properties with relation model when property name and defined relati
             ['id' => 1, 'title' => 'Post A'],
         ],
     ]);
-
+    
     expect($user->posts)
         ->toBeInstanceOf(Collection::class)
         ->and($user->posts->first())->toBeInstanceOf(Post::class);

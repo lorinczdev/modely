@@ -1,6 +1,7 @@
 <?php
 
 use Lorinczdev\Modely\Facades\ApiRoute;
+use Lorinczdev\Modely\Tests\Mocks\Integration\Models\Attachment;
 use Lorinczdev\Modely\Tests\Mocks\Integration\Models\Categories\Category;
 use Lorinczdev\Modely\Tests\Mocks\Integration\Models\Post;
 use Lorinczdev\Modely\Tests\Mocks\Integration\Models\User;
@@ -20,3 +21,6 @@ ApiRoute::resource('users/{user_id}/posts', Post::class)
 
 ApiRoute::resource('categories', Category::class)
     ->only('index', 'store', 'destroy');
+
+ApiRoute::resource('/{attachable_type}/{attachable_id}/attachments', Attachment::class)
+    ->only('index');

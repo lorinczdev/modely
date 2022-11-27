@@ -3,10 +3,12 @@
 namespace Lorinczdev\Modely\Models\Concerns;
 
 use Illuminate\Support\Collection;
+use Lorinczdev\Modely\Models\Builder;
 use Lorinczdev\Modely\Models\Model;
 use Lorinczdev\Modely\Models\Relations\BelongsTo;
 use Lorinczdev\Modely\Models\Relations\HasMany;
 use Lorinczdev\Modely\Models\Relations\HasOne;
+use Lorinczdev\Modely\Models\Relations\MorphMany;
 use Str;
 
 trait HasRelationships
@@ -38,8 +40,7 @@ trait HasRelationships
      */
     public function setRelation(string $relation, mixed $value): static
     {
-        // $this->relations[$relation] = $value;
-        $this->relations[$relation] = null; // use null keys for now
+        $this->relations[$relation] = $this->{$relation}()->fill($value);
 
         return $this;
     }
@@ -121,5 +122,68 @@ trait HasRelationships
         $localKey = $localKey ?: $this->getKeyName();
 
         return new BelongsTo($className, $this, $foreignKey, $localKey);
+    }
+
+    /**
+     * Define a polymorphic one-to-many relationship.
+     */
+    public function morphMany(string $related, string $name, ?string $type = null, ?string $id = null, ?string $localKey = null): MorphMany
+    {
+        // $instance = $this->newRelatedInstance($related);
+
+        // Here we will gather up the morph type and ID for the relationship so that we
+        // can properly query the intermediate table of a relation. Finally, we will
+        // get the table and create the relationship instances for the developers.
+        [$type, $id] = $this->getMorphs($name, $type, $id);
+
+        $localKey = $localKey ?: $this->getKeyName();
+
+        return $this->newMorphMany($related, $this, $type, $id, $localKey);
+    }
+
+    /**
+     * Instantiate a new MorphMany relationship.
+     */
+    protected function newMorphMany(string $related, Model $parent, string $type, string $id, string $localKey): MorphMany
+    {
+        return new MorphMany($related, $parent, $type, $id, $localKey);
+    }
+
+    /**
+     * Get the polymorphic relationship columns.
+     */
+    protected function getMorphs(string $name, ?string $type, ?string $id): array
+    {
+        return [$type ?: $name.'_type', $id ?: $name.'_id'];
+    }
+
+    /**
+     * Get the class name for polymorphic relations.
+     */
+    public function getMorphClass(): string
+    {
+        // $morphMap = Relation::morphMap();
+        //
+        // if (! empty($morphMap) && in_array(static::class, $morphMap)) {
+        //     return array_search(static::class, $morphMap, true);
+        // }
+        //
+        // if (static::class === Pivot::class) {
+        //     return static::class;
+        // }
+        //
+        // if (Relation::requiresMorphMap()) {
+        //     throw new ClassMorphViolationException($this);
+        // }
+
+        return static::class;
+    }
+
+    /**
+     * Create a new model instance for a related model.
+     */
+    protected function newRelatedInstance(string $class): Model
+    {
+        return new $class;
     }
 }

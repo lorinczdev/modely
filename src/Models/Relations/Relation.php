@@ -36,7 +36,7 @@ abstract class Relation
         $model = new $this->relationModelClass($data);
 
         // For each relation model foreign keys are set
-        $this->setForeignKey($model);
+        $this->setForeignKeys($model);
 
         // Store model
         $model->save();
@@ -50,10 +50,22 @@ abstract class Relation
     /**
      * Set foreign keys.
      */
-    protected function setForeignKey(Model $model): Model
+    protected function setForeignKeys(Model $model): Model
     {
         $model->foreignKey = $this->parent->getAttribute($this->localKey);
         $model->foreignKeyName = $this->foreignKey;
+
+        $parameters = [
+            'foreign_key' => $model->foreignKey,
+            'foreign_key_name' => $model->foreignKeyName,
+            $model->foreignKeyName => $model->foreignKey,
+        ];
+
+        if ($this->morphType ?? false) {
+            $parameters[$this->morphType] = $this->parent->getName();
+        }
+
+        $model->setRelationParameters($parameters);
 
         return $model;
     }
@@ -96,7 +108,7 @@ abstract class Relation
         $model = new $this->relationModelClass();
 
         // Set foreign keys
-        $this->setForeignKey($model);
+        $this->setForeignKeys($model);
 
         // Return new query instance for relation model
         return $model->newQuery();
@@ -113,7 +125,7 @@ abstract class Relation
         $models = $this->query()->get();
 
         // Set foreign keys for each model
-        $models = $models->map(fn ($model) => $this->setForeignKey($model));
+        $models = $models->map(fn ($model) => $this->setForeignKeys($model));
 
         return $models;
     }
@@ -136,7 +148,7 @@ abstract class Relation
         }
 
         // Set foreign keys
-        $this->setForeignKey($model);
+        $this->setForeignKeys($model);
 
         return $model;
     }

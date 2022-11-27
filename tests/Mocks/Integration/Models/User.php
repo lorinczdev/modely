@@ -19,4 +19,9 @@ class User extends Model
     {
         return $this->hasMany(Post::class);
     }
+
+    public function attachments(): \Lorinczdev\Modely\Models\Relations\MorphMany
+    {
+        return $this->morphMany(Attachment::class, 'attachable');
+    }
 }
