@@ -5,6 +5,7 @@ namespace Lorinczdev\Modely;
 use Illuminate\Support\ServiceProvider;
 use Lorinczdev\Modely\Commands\CacheRoutesCommand;
 use Lorinczdev\Modely\Commands\ClearCacheCommand;
+use Lorinczdev\Modely\Models\Model;
 use Lorinczdev\Modely\Routing\ApiRouter;
 
 class ModelyServiceProvider extends ServiceProvider
@@ -16,6 +17,8 @@ class ModelyServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        Model::$snakeAttributes = false;
+
         app(ApiRouter::class)->compileRoutes();
 
         // $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'lorinczdev');
