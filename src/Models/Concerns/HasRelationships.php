@@ -65,9 +65,57 @@ trait HasRelationships
         return method_exists($this, $relationship);
     }
 
+    /**
+     * Set the entire relations array on the model.
+     */
+    public function setRelations(array $relations): static
+    {
+        $this->relations = $relations;
+
+        return $this;
+    }
+
+    /**
+     * Duplicate the instance and unset all the loaded relations.
+     *
+     * @return $this
+     */
+    public function withoutRelations(): static
+    {
+        return (clone $this)->unsetRelations();
+    }
+
+    /**
+     * Unset all the loaded relations for the instance.
+     *
+     * @return $this
+     */
+    public function unsetRelations(): static
+    {
+        $this->relations = [];
+
+        return $this;
+    }
+
+    /**
+     * Get a specified relationship.
+     */
+    public function getRelation(string $relation): mixed
+    {
+        return $this->relations[$relation];
+    }
+
     public function getForeignKey(): string
     {
         return Str::snake(class_basename($this)).'_'.$this->getKeyName();
+    }
+
+    /**
+     * Get all the loaded relations for the instance.
+     */
+    public function getRelations(): array
+    {
+        return $this->relations;
     }
 
     /**
