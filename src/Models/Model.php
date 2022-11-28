@@ -763,6 +763,6 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
 
     public function getName(): string
     {
-        return $this->name ?? Str::camel(class_basename($this::class));
+        return Str::camel(class_basename($this::class));
     }
 }
