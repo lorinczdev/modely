@@ -31,7 +31,7 @@ trait HasRelationships
 
     public function isRelationFillable(mixed $value): bool
     {
-        return in_array(gettype($value), [Model::class, 'array', Collection::class, 'null']);
+        return in_array(gettype($value), [Model::class, 'array', Collection::class, 'NULL']);
     }
 
     /**
