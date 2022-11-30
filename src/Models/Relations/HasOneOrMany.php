@@ -33,7 +33,7 @@ abstract class HasOneOrMany extends Relation
      */
     protected function isHasMany(): bool
     {
-        return static::class === HasMany::class;
+        return static::class === HasMany::class || static::class === MorphMany::class;
     }
 
     /**

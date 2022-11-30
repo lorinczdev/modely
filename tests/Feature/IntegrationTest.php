@@ -46,7 +46,7 @@ it('can read user posts', function () {
 
     $posts = $user->posts()->where('title', 'Post A')->get();
 
-    expect($posts)->toHaveCount(1);
+    expect($posts)->toHaveCount(2);
 });
 
 it('user can create a post', function () {
@@ -67,7 +67,7 @@ it('user can create a post', function () {
 test('user can delete all related posts', function () {
     Http::fake([
         '*/users/1' => Http::response(body: fixture('Users/show')),
-        '*/users/1/posts/1' => Http::response(body: fixture('Posts/destroy')),
+        '*/users/1/posts/*' => Http::response(body: fixture('Posts/destroy')),
         '*/users/1/posts' => Http::sequence()
             ->push(body: fixture('Posts/index'))
             ->push(body: fixture('Posts/empty')),
