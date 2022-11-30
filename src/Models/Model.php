@@ -550,11 +550,13 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
             return $this;
         }
 
-        $this->setRawAttributes(
-            $this->find($this->getKey())->attributes
-        );
+        $this->classCastCache = [];
+        $this->attributeCastCache = [];
 
-        $this->syncOriginal();
+        $this->fill(
+            $this->find($this->getKey())->toArray(),
+            true
+        );
 
         return $this;
     }
