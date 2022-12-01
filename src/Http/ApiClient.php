@@ -133,7 +133,7 @@ abstract class ApiClient
         // Log::debug(json_encode($data));
     }
 
-    protected function getHttpClient(): PendingRequest
+    public function getHttpClient(): PendingRequest
     {
         $client = Http::timeout(10);
 
@@ -157,7 +157,7 @@ abstract class ApiClient
         // Additional configuration.
     }
 
-    protected function authorize(PendingRequest $client): void
+    public function authorize(PendingRequest $client): mixed
     {
         // Here we can add authorization logic.
     }
