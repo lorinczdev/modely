@@ -186,7 +186,7 @@ class Builder
     /**
      * Add a basic "where not" clause to the query.
      */
-    public function whereNot(string|array|Closure $column, mixed $operator = null, mixed $value = null, $boolean = 'and')
+    public function whereNot(string|array|Closure $column, mixed $operator = null, mixed $value = null, $boolean = 'and'): static
     {
         return $this->where($column, $operator, $value, $boolean.' not');
     }

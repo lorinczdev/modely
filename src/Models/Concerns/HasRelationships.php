@@ -233,4 +233,24 @@ trait HasRelationships
     {
         return new $class;
     }
+
+    /**
+     * Get the dynamic relation resolver if defined or inherited, or return null.
+     *
+     * @param  string  $class
+     * @param  string  $key
+     * @return mixed
+     */
+    public function relationResolver($class, $key)
+    {
+        if ($resolver = static::$relationResolvers[$class][$key] ?? null) {
+            return $resolver;
+        }
+
+        if ($parent = get_parent_class($class)) {
+            return $this->relationResolver($parent, $key);
+        }
+
+        return null;
+    }
 }

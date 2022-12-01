@@ -5,7 +5,7 @@ namespace Lorinczdev\Modely\Models\Pagination;
 use Illuminate\Support\Collection;
 use Lorinczdev\Modely\Models\Builder;
 
-class Pagination extends Collection
+class Pagination
 {
     protected int $pages;
 
@@ -21,8 +21,6 @@ class Pagination extends Collection
         protected int $page = 1,
         protected string $method = 'index'
     ) {
-        parent::__construct();
-
         $this->query->forPage($this->page, $this->perPage);
 
         $this->collection = new PaginateCollection($this->fetch());
@@ -34,7 +32,7 @@ class Pagination extends Collection
 
         $this->emptyResponse = $items->isEmpty();
 
-        return $this->getArrayableItems($items);
+        return collect($items)->all();
     }
 
     public function previous(): static

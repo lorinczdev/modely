@@ -85,7 +85,12 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
      */
     protected bool $escapeWhenCastingToString = false;
 
-    protected array $passthru = [
+    /**
+     * The methods that can be proxied.
+     *
+     * @var array<int, string>
+     */
+    protected array $proxies = [
         'get',
         'hydrate',
         'create',
@@ -583,7 +588,7 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
 
     public function __call(string $method, array $arguments): mixed
     {
-        if (in_array($method, $this->passthru, true)) {
+        if (in_array($method, $this->proxies, true)) {
             return $this->forwardCallTo($this->newQuery(), $method, $arguments);
         }
 
