@@ -414,7 +414,7 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
         $dirty = $this->getDirty();
 
         if (count($dirty) > 0) {
-            $query->update($dirty);
+            $query->update($this->only(array_keys($dirty)));
 
             $this->syncChanges();
 
@@ -445,7 +445,7 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
             return false;
         }
 
-        $attributes = $this->getAttributesForInsert();
+        $attributes = $this->attributesToArray();
 
         if (empty($attributes)) {
             return true;
