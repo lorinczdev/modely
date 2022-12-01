@@ -157,7 +157,7 @@ abstract class ApiClient
         // Additional configuration.
     }
 
-    public function authorize(PendingRequest $client): mixed
+    public function authorize(PendingRequest $client): void
     {
         // Here we can add authorization logic.
     }
