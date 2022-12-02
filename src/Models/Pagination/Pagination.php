@@ -2,7 +2,6 @@
 
 namespace Lorinczdev\Modely\Models\Pagination;
 
-use Illuminate\Support\Collection;
 use Lorinczdev\Modely\Models\Builder;
 
 class Pagination

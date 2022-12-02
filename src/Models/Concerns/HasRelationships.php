@@ -37,9 +37,9 @@ trait HasRelationships
     /**
      * Set the given relationship on the model.
      */
-    public function setRelation(string $relation, mixed $value): static
+    public function setRelation(string $relation, mixed $value, bool $sync = false): static
     {
-        $this->relations[$relation] = $this->{$relation}()->fill($value);
+        $this->relations[$relation] = $this->{$relation}()->fill($value, $sync);
 
         return $this;
     }

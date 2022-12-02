@@ -132,7 +132,7 @@ abstract class Relation
     /**
      * Transform single model.
      */
-    protected function fillOne(array|Model|null $data = null): ?Model
+    protected function fillOne(array|Model|null $data = null, bool $sync = false): ?Model
     {
         // Return null when data is null
         if (! $data) {
@@ -141,7 +141,7 @@ abstract class Relation
 
         // Transform data to a model if not done already
         if (! $data instanceof Model) {
-            $model = new $this->relationModelClass($data, $this->parent);
+            $model = (new $this->relationModelClass)->fill($data, $sync);
         } else {
             $model = $data;
         }

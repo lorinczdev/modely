@@ -7,7 +7,6 @@ use BadMethodCallException;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Jsonable;
 use Illuminate\Database\Eloquent\Concerns\GuardsAttributes;
-use Illuminate\Database\Eloquent\Concerns\HasAttributes;
 use Illuminate\Database\Eloquent\Concerns\HasEvents;
 use Illuminate\Database\Eloquent\Concerns\HidesAttributes;
 use Illuminate\Database\Eloquent\JsonEncodingException;
@@ -19,6 +18,7 @@ use JsonSerializable;
 use LogicException;
 use Lorinczdev\Modely\Http\ApiClient;
 use Lorinczdev\Modely\Http\ApiRequest;
+use Lorinczdev\Modely\Models\Concerns\HasAttributes;
 use Lorinczdev\Modely\Models\Concerns\HasParameters;
 use Lorinczdev\Modely\Models\Concerns\HasRelationships;
 use Lorinczdev\Modely\Models\Concerns\HasTimestamps;
@@ -146,7 +146,7 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
 
         foreach ($this->fillableFromArray($attributes) as $key => $value) {
             if ($this->isRelation($key) && $this->isRelationFillable($value)) {
-                $this->setRelation($key, $value);
+                $this->setRelation($key, $value, $sync);
 
                 continue;
             }
@@ -450,7 +450,7 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
             return false;
         }
 
-        $attributes = $this->attributesToArray();
+        $attributes = $this->toArray();
 
         if (empty($attributes)) {
             return true;

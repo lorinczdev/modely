@@ -39,21 +39,21 @@ abstract class HasOneOrMany extends Relation
     /**
      * Transform provided data to Models.
      */
-    public function fill(Model|array|Collection|null $data): Model|Collection|null
+    public function fill(Model|array|Collection|null $data, bool $sync = false): Model|Collection|null
     {
         // Transform many models
         if ($this->isHasMany()) {
-            return $this->fillMany($data);
+            return $this->fillMany($data, $sync);
         }
 
         // Transform single model
-        return $this->fillOne($data);
+        return $this->fillOne($data, $sync);
     }
 
     /**
      * Transform multiple models.
      */
-    protected function fillMany(array|Collection|null $data = []): Collection
+    protected function fillMany(array|Collection|null $data = [], bool $sync = false): Collection
     {
         // Return if data are already collection
         if ($data instanceof Collection) {
@@ -61,6 +61,6 @@ abstract class HasOneOrMany extends Relation
         }
 
         // Return collection with items transformed to models
-        return collect($data)->map(fn ($item) => $this->fillOne($item));
+        return collect($data)->map(fn ($item) => $this->fillOne($item, $sync));
     }
 }
