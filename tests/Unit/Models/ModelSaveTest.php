@@ -75,9 +75,9 @@ it('has update method', function () {
 
     $user = new User(['id' => 1]);
 
-    $updated = $user->update(['name' => 'Keram']);
+    $updated = $user->update(['name' => 'keraM']);
 
-    expect($user->name)->toBe('Keram')
+    expect($user->name)->toBe('keraM')
         ->and($updated)->toBe(true);
 });
 

@@ -419,9 +419,9 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
         $dirty = $this->getDirty();
 
         if (count($dirty) > 0) {
-            $query->update($this->only(array_keys($dirty)));
+            $updated = $query->update($this->only(array_keys($dirty)));
 
-            $this->syncChanges();
+            $this->fill($updated, true);
 
             $this->fireModelEvent('updated', false);
         }
