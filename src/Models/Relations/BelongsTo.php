@@ -17,9 +17,9 @@ class BelongsTo extends Relation
     /**
      * Transform provided data to Models.
      */
-    public function fill(Model|array|null $data): ?Model
+    public function fill(Model|array|null $data, bool $sync = false): ?Model
     {
         // Transform single model
-        return $this->fillOne($data);
+        return $this->fillOne($data, $sync);
     }
 }
