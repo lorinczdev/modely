@@ -11,6 +11,7 @@ use Lorinczdev\Modely\Models\Pagination\Pagination;
 
 /**
  * @mixin Query
+ * @template T of Model
  */
 class Builder
 {
@@ -36,6 +37,9 @@ class Builder
         // 'sum',
     ];
 
+    /**
+     * @param T $model
+     */
     public function __construct(
         protected Model $model,
     ) {
@@ -221,8 +225,9 @@ class Builder
 
     /**
      * Find a model by its primary key or throw an exception.
+     * @return Collection|T
      */
-    public function findOrFail(mixed $id): Collection|Model|null
+    public function findOrFail(mixed $id): Collection|Model
     {
         $result = $this->find($id);
 
@@ -247,7 +252,10 @@ class Builder
         return $result;
     }
 
-    public function find($id): null|Model|Collection
+    /**
+     * @return Collection|null|T
+     */
+    public function find(mixed $id): null|Model|Collection
     {
         if (is_array($id) || $id instanceof Arrayable) {
             return $this->findMany($id);
@@ -319,6 +327,7 @@ class Builder
 
     /**
      * Find a model by its primary key or return fresh model instance.
+     * @return T
      */
     public function findOrNew(mixed $id): Model
     {
@@ -331,6 +340,7 @@ class Builder
 
     /**
      * Get the first record matching the attributes or create it.
+     * @return T
      */
     public function firstOrCreate(array $attributes = [], array $values = []): Model
     {
@@ -345,6 +355,7 @@ class Builder
 
     /**
      * Create or update a record matching the attributes, and fill it with values.
+     * @return T
      */
     public function updateOrCreate(array $attributes, array $values = []): Model
     {
@@ -355,6 +366,7 @@ class Builder
 
     /**
      * Get the first record matching the attributes or instantiate it.
+     * @return T
      */
     public function firstOrNew(array $attributes = [], array $values = []): Model
     {
@@ -367,6 +379,7 @@ class Builder
 
     /**
      * Execute the query and get the first result or throw an exception.
+     * @return T
      */
     public function firstOrFail(): Model
     {
@@ -379,6 +392,7 @@ class Builder
 
     /**
      * Save a new model and return the instance. Allow mass-assignment.
+     * @return T
      */
     public function forceCreate(array $attributes): Model
     {
@@ -387,6 +401,7 @@ class Builder
 
     /**
      * Save a new model and return the instance.
+     * @return T
      */
     public function create(array $attributes = []): Model
     {
