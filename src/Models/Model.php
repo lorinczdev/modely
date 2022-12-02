@@ -476,7 +476,7 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
 
         $this->exists = true;
 
-        $this->syncOriginal();
+        $this->syncOriginalAndRelations();
     }
 
     /**

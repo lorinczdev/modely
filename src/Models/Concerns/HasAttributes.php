@@ -27,7 +27,6 @@ use Illuminate\Support\Collection as BaseCollection;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Str;
-use function in_array;
 use InvalidArgumentException;
 use LogicException;
 use Lorinczdev\Modely\Models\Model;
@@ -2052,18 +2051,11 @@ trait HasAttributes
             }
         }
 
-        foreach ($this->getRelations() as $key => $value) {
-            if (! $value) {
-                continue;
+        $this->runOnEveryRelation(function (Model $model, string $relationName) use (&$dirty) {
+            if ($model->isDirty()) {
+                $dirty[$relationName] = $model->getDirty();
             }
-
-            foreach (BaseCollection::wrap($value) as $item) {
-                if ($item->isDirty()) {
-                    $dirty[$key] = $item->getDirty();
-                    break;
-                }
-            }
-        }
+        });
 
         return $dirty;
     }

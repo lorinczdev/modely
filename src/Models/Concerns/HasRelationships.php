@@ -3,6 +3,7 @@
 namespace Lorinczdev\Modely\Models\Concerns;
 
 use Illuminate\Support\Collection;
+use Illuminate\Support\Collection as BaseCollection;
 use Lorinczdev\Modely\Models\Model;
 use Lorinczdev\Modely\Models\Relations\BelongsTo;
 use Lorinczdev\Modely\Models\Relations\HasMany;
@@ -236,12 +237,8 @@ trait HasRelationships
 
     /**
      * Get the dynamic relation resolver if defined or inherited, or return null.
-     *
-     * @param  string  $class
-     * @param  string  $key
-     * @return mixed
      */
-    public function relationResolver($class, $key)
+    public function relationResolver(string $class, string $key): mixed
     {
         if ($resolver = static::$relationResolvers[$class][$key] ?? null) {
             return $resolver;
@@ -252,5 +249,30 @@ trait HasRelationships
         }
 
         return null;
+    }
+
+    public function runOnEveryRelation(callable $callback): void
+    {
+        foreach ($this->getRelations() as $relationName => $related) {
+            if (! $related) {
+                continue;
+            }
+
+            BaseCollection::wrap($related)
+                ->each(function (Model $model) use ($relationName, $callback) {
+                    $callback($model, $relationName);
+                });
+        }
+    }
+
+    public function syncOriginalAndRelations(): static
+    {
+        $this->syncOriginal();
+
+        $this->runOnEveryRelation(function (Model $model) {
+            $model->syncOriginal();
+        });
+
+        return $this;
     }
 }
