@@ -2,6 +2,7 @@
 
 namespace Lorinczdev\Modely\Models\Concerns;
 
+use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Collection as BaseCollection;
 use Lorinczdev\Modely\Models\Model;
@@ -41,6 +42,8 @@ trait HasRelationships
     public function setRelation(string $relation, mixed $value, bool $sync = false): static
     {
         $this->relations[$relation] = $this->{$relation}()->fill($value, $sync);
+
+        Arr::forget($this->attributes, $relation);
 
         return $this;
     }
