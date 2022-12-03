@@ -5,6 +5,7 @@ namespace Lorinczdev\Modely\Models;
 use Closure;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Http\Client\RequestException;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Traits\ForwardsCalls;
 use Lorinczdev\Modely\Models\Pagination\Pagination;
@@ -262,7 +263,11 @@ class Builder
             return $this->findMany($id);
         }
 
-        $item = $this->query->find($id);
+        try {
+            $item = $this->query->find($id);
+        } catch (RequestException $e) {
+            return null;
+        }
 
         if (! $item) {
             return null;
