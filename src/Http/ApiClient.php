@@ -149,12 +149,17 @@ abstract class ApiClient
             ->withOptions([
                 'debug' => false,
             ])
-            ->baseUrl($this->baseUrl);
+            ->baseUrl($this->baseUrl());
     }
 
     protected function withConfiguration(PendingRequest $client): void
     {
         // Additional configuration.
+    }
+
+    protected function baseUrl(): string
+    {
+        return $this->baseUrl;
     }
 
     public function authorize(PendingRequest $client): void
