@@ -90,7 +90,7 @@ class Query
     /**
      * Execute a query for a single record by ID.
      */
-    public function find(int $id): ?array
+    public function find(mixed $id): ?array
     {
         $response = $this->request
             ->withParameters([$this->model->getKeyName() => $id])
