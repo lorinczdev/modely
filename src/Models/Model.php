@@ -24,7 +24,7 @@ use Lorinczdev\Modely\Models\Concerns\HasRelationships;
 use Lorinczdev\Modely\Models\Concerns\HasTimestamps;
 
 /**
- * @mixin Builder
+ * @mixin Builder<static>
  *
  * @method static static first()
  */
@@ -234,6 +234,8 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
 
     /**
      * Returns new query instance.
+     *
+     * @return Builder<static>
      */
     public static function query(): Builder
     {
@@ -242,6 +244,8 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
 
     /**
      * Returns new query instance.
+     *
+     * @return Builder<static>
      */
     public function newQuery(): Builder
     {

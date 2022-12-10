@@ -74,6 +74,9 @@ class Builder
         return $this->where(...func_get_args())->first();
     }
 
+    /*
+     * @return T
+     */
     public function first()
     {
         return $this->take(1)->get()->first();
@@ -227,7 +230,7 @@ class Builder
     /**
      * Find a model by its primary key or throw an exception.
      *
-     * @return Collection|T
+     * @return Collection<T>|T
      */
     public function findOrFail(mixed $id): Collection|Model
     {
@@ -255,7 +258,7 @@ class Builder
     }
 
     /**
-     * @return Collection|null|T
+     * @return Collection<T>|null|T
      */
     public function find(mixed $id): null|Model|Collection
     {
@@ -264,6 +267,7 @@ class Builder
         }
 
         try {
+            /** @var T $model */
             $item = $this->query->find($id);
         } catch (RequestException $e) {
             return null;
@@ -278,6 +282,9 @@ class Builder
 
     /**
      * Find multiple models by their primary keys.
+     *
+     * @param Arrayable|array $ids
+     * @return Collection<T>
      */
     public function findMany(Arrayable|array $ids): Collection
     {
