@@ -96,6 +96,7 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
         'create',
         'insert',
         'find',
+        'findOrFail',
         'first',
         'where',
         'skip',
