@@ -26,7 +26,7 @@ class Query
     /**
      * The columns that should be returned.
      */
-    public array $columns;
+    public array $columns = [];
 
     /**
      * The where constraints for the query.
