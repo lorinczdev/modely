@@ -152,6 +152,8 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
                 continue;
             }
 
+            $key = $this->normalizeKey($key);
+
             if ($this->isFillable($key)) {
                 $this->setAttribute($key, $value);
             } elseif ($totallyGuarded) {
@@ -171,6 +173,21 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
         }
 
         return $this;
+    }
+
+    // if key starts with underscore, remove it
+    // if key contains a dot, replace it with underscore
+    protected function normalizeKey(string $key): string
+    {
+        if (Str::startsWith($key, '_')) {
+            $key = Str::after($key, '_');
+        }
+
+        if (Str::contains($key, '.')) {
+            $key = Str::replace('.', '_', $key);
+        }
+
+        return $key;
     }
 
     /**
@@ -268,7 +285,7 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
         // immediately and not do anything else. Otherwise, we will continue with a
         // deletion process on the model, firing the proper events, and so forth.
         if (! $this->exists) {
-            return;
+            return true;
         }
 
         if ($this->fireModelEvent('deleting') === false) {
@@ -501,7 +518,7 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
             return false;
         }
 
-        $this->delete();
+        return $this->delete();
     }
 
     public function isDeleted(): bool
