@@ -15,8 +15,8 @@
         "Modely"
     ],
     "require": {
-        "php": "^8.1",
-        "illuminate/support": "~10",
+        "php": "^8.3",
+        "illuminate/support": "~11",
         "guzzlehttp/guzzle": "^7.4"
     },
     "require-dev": {
